@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="ErrMsgMgmtDBDAOErrMsgVOUSQL">
+			<desc><![CDATA[   ]]></desc>
+			<sql><![CDATA[
+UPDATE COM_ERR_MSG SET 
+	EDW_UPD_DT= SYSDATE
+,	UPD_DT = SYSDATE
+,	UPD_USR_ID = @[upd_usr_id]
+,	ERR_DESC = @[err_desc]
+,	ERR_MSG = @[err_msg]
+,	ERR_LVL_CD = @[err_lvl_cd]
+,	ERR_TP_CD = @[err_tp_cd]
+WHERE	ERR_MSG_CD = @[err_msg_cd]			]]></sql>
+			<params>
+				<param name="upd_usr_id" type="12" value="" out="N"/>
+				<param name="err_desc" type="12" value="" out="N"/>
+				<param name="err_msg" type="12" value="" out="N"/>
+				<param name="err_lvl_cd" type="12" value="" out="N"/>
+				<param name="err_tp_cd" type="12" value="" out="N"/>
+				<param name="err_msg_cd" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>
