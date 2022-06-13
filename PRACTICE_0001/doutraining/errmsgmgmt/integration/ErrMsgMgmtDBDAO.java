@@ -41,13 +41,12 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Searching action
 	 * @param ErrMsgVO errMsgVO
 	 * @return List<ErrMsgVO>
 	 * @exception DAOException
 	 */
 	 @SuppressWarnings("unchecked")
-	 //Searching action
 	public List<ErrMsgVO> searchErrMsgVO(ErrMsgVO errMsgVO) throws DAOException {
 		//Store returning value from Database
 		DBRowSet dbRowset = null;
@@ -89,12 +88,11 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Inserting action
 	 * @param ErrMsgVO errMsgVO
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	//Inserting action
 	public void addmanageErrMsgVO(ErrMsgVO errMsgVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -130,14 +128,12 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Updating action
 	 * @param ErrMsgVO errMsgVO
 	 * @return int
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	
-	//Updating action
 	public int modifymanageErrMsgVO(ErrMsgVO errMsgVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -176,14 +172,12 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Deleting action
 	 * @param ErrMsgVO errMsgVO
 	 * @return int
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	
-	//Deleting action
 	public int removemanageErrMsgVO(ErrMsgVO errMsgVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -221,14 +215,12 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Same as addmanageErrMsgVO but it's used for list of VO
 	 * @param List<ErrMsgVO> errMsgVO
 	 * @return int[]
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	
-	//Same as addmanageErrMsgVO but it's used for list of VO
 	public int[] addmanageErrMsgVOS(List<ErrMsgVO> errMsgVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
@@ -251,14 +243,12 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	}
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Same as modifymanageErrMsgVO but it's used for list of VO
 	 * @param List<ErrMsgVO> errMsgVO
 	 * @return int[]
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	
-	//Same as modifymanageErrMsgVO but it's used for list of VO
 	public int[] modifymanageErrMsgVOS(List<ErrMsgVO> errMsgVO) throws DAOException,Exception {
 		int updCnt[] = null;
 		try {
@@ -282,13 +272,12 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
+	 * Same as removemanageErrMsgVO but it's used for list of VO
 	 * @param List<ErrMsgVO> errMsgVO
 	 * @return int[]
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	//Same as removemanageErrMsgVO but it's used for list of VO
 	public int[] removemanageErrMsgVOS(List<ErrMsgVO> errMsgVO) throws DAOException,Exception {
 		int delCnt[] = null;
 		try {

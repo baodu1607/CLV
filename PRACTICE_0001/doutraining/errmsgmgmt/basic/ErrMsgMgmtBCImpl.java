@@ -45,13 +45,11 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 	}
 	/**
 	 * [비즈니스대상]을 [행위] 합니다.<br>
-	 * 
+	 * SEARCH action
 	 * @param ErrMsgVO errMsgVO
 	 * @return List<ErrMsgVO>
 	 * @exception EventException
 	 */
-	
-	//SEARCH action
 	public List<ErrMsgVO> searchErrMsgVO(ErrMsgVO errMsgVO) throws EventException {
 		try {
 			return dbDao.searchErrMsgVO(errMsgVO);
@@ -65,13 +63,11 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 	
 	/**
 	 * [비즈니스대상]을 [행위] 합니다.<br>
-	 * 
+	 * MULTI action
 	 * @param ErrMsgVO[] errMsgVO
 	 * @param account SignOnUserAccount
 	 * @exception EventException
 	 */
-	
-	//MULTI action
 	public void manageErrMsgVO(ErrMsgVO[] errMsgVO, SignOnUserAccount account) throws EventException{
 		try {
 			//List needs to be inserted

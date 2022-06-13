@@ -46,7 +46,7 @@ public class DouTrainingSC extends ServiceCommandSupport {
 	public void doStart() {
 		log.debug("DouTrainingSC 시작");
 		try {
-			// 일단 comment --> 로그인 체크 부분
+			//Authenticate
 			account = getSignOnUserAccount();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage());
@@ -124,7 +124,7 @@ public class DouTrainingSC extends ServiceCommandSupport {
 		try{
 			begin();
 			command.manageErrMsgVO(event.getErrMsgVOS(),account);
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
+			eventResponse.setUserMessage(new ErrorHandler("DOU00001").getUserMessage());
 			commit();
 		} catch(EventException ex) {
 			rollback();

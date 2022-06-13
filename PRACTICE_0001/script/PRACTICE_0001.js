@@ -5,7 +5,9 @@ var sheetCnt = 0;
 //set function processButtonClick for event onclick on browser
 document.onclick = processButtonClick;
 
-//handle event onclick
+/**
+ * handle event onclick
+ */
 function processButtonClick() {
 	//get sheet1
     var sheetObject1 = sheetObjects[0];
@@ -42,24 +44,17 @@ function processButtonClick() {
             
         //button Down Excel     
         case "btn_DownExcel":
-        	//if sheet don't have data
-            if (sheetObject1.RowCount() < 1) {
-            	//show message base on code message
-                ComShowCodeMessage("COM132501");
-            } else {
-            	//download sheet
-            		//DownCols: DownCols
-            		//makeHiddenSkipCol: ignore hidden column
-                sheetObject1.Down2Excel({DownCols: makeHiddenSkipCol(sheetObject1)});
-            }
-            break;
+        	doActionIBSheet(sheetObject1, formObj, IBDOWNEXCEL);
+        	break;
         //do nothing
         default:
             break;
     }
 }
 
-//Function that is called after the JSP file is loaded
+/**
+ * Function that is called after the JSP file is loaded
+ */
 function loadPage() {
     //generate Grid Layout
     for (i = 0; i < sheetObjects.length; i++) {
@@ -72,7 +67,9 @@ function loadPage() {
     doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
 }
 
-//Function that configure sheet
+/**
+ * Function that configure sheet
+ */
 function initSheet(sheetObj, sheetNo) {
 	//get sheet id
     var sheetID = sheetObj.id;
@@ -147,12 +144,21 @@ function initSheet(sheetObj, sheetNo) {
 
 }
 
-//Function that add sheet object to array
+/**
+ * Function that add sheet object to array
+ */
 function setSheetObject(sheet_obj) {
     sheetObjects[sheetCnt++] = sheet_obj;
 }
 
-//Function that define transaction logic between UI and server
+
+/**
+ * Function that define transaction logic between UI and server
+ * 
+ * @param sheetObj
+ * @param formObj
+ * @param sAction
+ */
 function doActionIBSheet(sheetObj, formObj, sAction) {
 	//Check or configure whether to display debugging message
 		//-1: Start system popup debugging
@@ -183,13 +189,29 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
             //ObjId.DoSearch(PageUrl, [Param], [Opt])
             sheetObj.DoSave("PRACTICE_0001GS.do", FormQueryString(formObj));
             break;
+            
+        case IBDOWNEXCEL:
+        	//if sheet don't have data
+            if (sheetObj.RowCount() < 1) {
+            	//show message base on code message
+                ComShowCodeMessage("COM132501");
+            } else {
+            	//download sheet
+            		//DownCols: DownCols
+            		//makeHiddenSkipCol: ignore hidden column
+            	sheetObj.Down2Excel({DownCols: makeHiddenSkipCol(sheetObj)});
+            }
+            break;
         default:
             break;
     }
 }
 
-//Function that validate form
+/**
+ * Function that validate form
+ */
 function validateForm(sheetObj) {
+
     // Create variables regex with the first 3 characters are upper and the last 5 numbers from 0 to 9
     var msgCd = sheetObj.GetCellValue(sheetObj.GetSelectRow(), "err_msg_cd");
     var regex = new RegExp("^([A-Z]{3})([0-9]{5})$");
@@ -198,20 +220,34 @@ function validateForm(sheetObj) {
         ComShowCodeMessage("COM132201",msgCd);
         return false;
     }
+    
+    //Check duplicate on Client side
+    var findText=sheetObj.FindText("err_msg_cd",msgCd);
+    if(findText!=-1&&findText!=sheetObj.GetSelectRow()){
+    	 ComShowCodeMessage("COM131302",msgCd);
+         return false;
+    }
+    
     return true;
 }
 
-//Event fires when the cell editing is completed and the previous value has been updated.
-function sheet1_OnChange(sheetObj) {
-    validateForm(sheetObj);
+/**
+ * Event fires when the cell editing is completed and the previous value has been updated.
+ */
+function sheet1_OnChange(sheetObj,Row,Col) {
+	if(sheetObj.ColSaveName(Col) == "err_msg_cd"){
+	    validateForm(sheetObj);
+	}
 }
 
-//Event fires when saving is completed using saving function
-//This event can fire when DoSave function is called.
-//ObjectID_OnSaveEnd(sheetObj, Code, Msg)
-	//sheetObj: sheet object
-	//Code: Processing result code (0 or higher is success, others should be processed as error)
-	//Msg: HTTP response message
+/**
+ * Event fires when saving is completed using saving function
+ * This event can fire when DoSave function is called.
+ * ObjectID_OnSaveEnd(sheetObj, Code, Msg)
+ * 	sheetObj: sheet object
+ * 	Code: Processing result code (0 or higher is success, others should be processed as error)
+ * 	Msg: HTTP response message
+ */
 function sheet1_OnSaveEnd(sheetObj, Code, Msg){ 
 	//if success reload page by calling action IBSEARCH
 	if(Code>=0){
@@ -223,7 +259,7 @@ function sheet1_OnSaveEnd(sheetObj, Code, Msg){
 	//slipt by ';'
 	var rows=invalidData.split(';');
 	
-	//loop through row
+	//loop through rows
 	for(var i=0;i<rows.length;i++){
 		//get value of error message code at current cell
 		var msgCd=sheetObj.GetCellValue(rows[i],"err_msg_cd");

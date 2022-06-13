@@ -25,7 +25,6 @@ import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.vo.ErrMsgVO;
  * @see PRACTICE_0001HTMLAction 참조
  * @since J2EE 1.6
  */
-
 public class Practice0001Event extends EventSupport {
 	//The serialVersionUID attribute is an identifier that is used to serialize/deserialize an object
 	private static final long serialVersionUID = 1L;
