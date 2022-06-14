@@ -122,13 +122,15 @@ function initSheet(sheetObj, sheetNo) {
                 //InsertEdit Whether to allow data editing when transaction is in "Insert" state
                 //ComboText: Combo list text string group
                 //ComboCode: Combo list code group
-                var cols = [{ Type: "Status", Hidden: 1, Width: 30, Align: "Center", SaveName: "ibflag" },
-                { Type: "DelCheck", Hidden: 0, Width: 45, Align: "Center", SaveName: "DEL", KeyField: 0, UpdateEdit: 1, InsertEdit: 1 },
-                { Type: "Text", Hidden: 0, Width: 80, Align: "Center", SaveName: "err_msg_cd", KeyField: 1, UpdateEdit: 0, InsertEdit: 1 },
-                { Type: "Combo", Hidden: 0, Width: 80, Align: "Center", SaveName: "err_tp_cd", KeyField: 1, UpdateEdit: 1, InsertEdit: 1, ComboText: "Server|UI|Both", ComboCode: "S|U|B" },
-                { Type: "Combo", Hidden: 0, Width: 80, Align: "Center", SaveName: "err_lvl_cd", KeyField: 1, UpdateEdit: 1, InsertEdit: 1, ComboText: "ERR|WARNING|INFO", ComboCode: "E|W|I" },
-                { Type: "Text", Hidden: 0, Width: 400, Align: "Left", SaveName: "err_msg", KeyField: 1, UpdateEdit: 1, InsertEdit: 1, MultiLineText: 1 },
-                { Type: "Text", Hidden: 0, Width: 250, Align: "Left", SaveName: "err_desc", UpdateEdit: 1, InsertEdit: 1 }];
+                var cols = [
+		{ Type: "Status",   Hidden: 1, Width: 30,  Align: "Center", SaveName: "ibflag" },
+                { Type: "DelCheck", Hidden: 0, Width: 45,  Align: "Center", SaveName: "DEL",        KeyField: 0, UpdateEdit: 1, InsertEdit: 1 },
+                { Type: "Text",     Hidden: 0, Width: 80,  Align: "Center", SaveName: "err_msg_cd", KeyField: 1, UpdateEdit: 0, InsertEdit: 1 },
+                { Type: "Combo",    Hidden: 0, Width: 80,  Align: "Center", SaveName: "err_tp_cd",  KeyField: 1, UpdateEdit: 1, InsertEdit: 1, ComboText: "Server|UI|Both",   ComboCode: "S|U|B" },
+                { Type: "Combo",    Hidden: 0, Width: 80,  Align: "Center", SaveName: "err_lvl_cd", KeyField: 1, UpdateEdit: 1, InsertEdit: 1, ComboText: "ERR|WARNING|INFO", ComboCode: "E|W|I" },
+                { Type: "Text",     Hidden: 0, Width: 400, Align: "Left",   SaveName: "err_msg",    KeyField: 1, UpdateEdit: 1, InsertEdit: 1, MultiLineText: 1 },
+                { Type: "Text",     Hidden: 0, Width: 250, Align: "Left",   SaveName: "err_desc",   KeyField: 0, UpdateEdit: 1, InsertEdit: 1 }
+		];
 
                 //initialize columns base on above configure
                 InitColumns(cols);
