@@ -173,7 +173,9 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
         	//set value for f_cmd input which is hidden on UI
             formObj.f_cmd.value = SEARCH;
             
-            //enable waiting image on sheet
+            // ComOpenWait:Whether a loading image will appears and lock the screen
+	    // true: lock the screen and appear loading image
+	    // false: return normal
             ComOpenWait(true);
             
             //call server to search
@@ -276,9 +278,6 @@ function sheet1_OnSaveEnd(sheetObj, Code, Msg){
 }
 //Handling event after searching
 function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
-	// ComOpenWait:Whether a loading image will appears and lock the screen
-	// true: lock the screen and appear loading image
-	// false: return normal
 	ComOpenWait(false);
 }
 
