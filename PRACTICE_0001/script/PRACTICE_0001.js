@@ -179,9 +179,7 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
             //call server to search
             //ObjId.DoSearch(PageUrl, [Param], [Opt])
             sheetObj.DoSearch("PRACTICE_0001GS.do", FormQueryString(formObj));
-            
-            //disable waiting image on sheet
-            ComOpenWait(false);
+
             break;
         case IBSAVE: // save
         	//set value for f_cmd input which is hidden on UI
@@ -275,5 +273,12 @@ function sheet1_OnSaveEnd(sheetObj, Code, Msg){
 		}
 	}
 
+}
+//Handling event after searching
+function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+	// ComOpenWait:Whether a loading image will appears and lock the screen
+	// true: lock the screen and appear loading image
+	// false: return normal
+	ComOpenWait(false);
 }
 
