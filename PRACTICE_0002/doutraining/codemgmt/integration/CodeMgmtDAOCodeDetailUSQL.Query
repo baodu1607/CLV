@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="CodeMgmtDAOCodeDetailUSQL">
+			<desc><![CDATA[CodeDetail]]></desc>
+			<sql><![CDATA[
+update com_intg_cd_dtl set 
+	intg_cd_val_dp_desc = @[intg_cd_val_dp_desc],
+    intg_cd_val_desc = @[intg_cd_val_desc],
+    intg_cd_val_dp_seq = @[intg_cd_val_dp_seq],
+    upd_usr_id = @[upd_usr_id],
+    upd_dt = sysdate
+where intg_cd_id = @[intg_cd_id]
+and intg_cd_val_ctnt = @[intg_cd_val_ctnt]			]]></sql>
+			<params>
+				<param name="intg_cd_val_dp_desc" type="12" value="" out="N"/>
+				<param name="intg_cd_val_desc" type="12" value="" out="N"/>
+				<param name="intg_cd_val_dp_seq" type="12" value="" out="N"/>
+				<param name="upd_usr_id" type="12" value="" out="N"/>
+				<param name="intg_cd_id" type="12" value="" out="N"/>
+				<param name="intg_cd_val_ctnt" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="CodeMgmtDAOCodeVOUSQL">
+			<desc><![CDATA[CodeMgmt]]></desc>
+			<sql><![CDATA[
+update com_intg_cd set
+    intg_cd_nm = @[intg_cd_nm],
+    intg_cd_desc = @[intg_cd_desc],
+    intg_cd_tp_cd = @[intg_cd_tp_cd],
+    intg_cd_len = @[intg_cd_len],
+    ownr_sub_sys_cd = @[ownr_sub_sys_cd],
+    intg_cd_use_flg = @[intg_cd_use_flg],
+    upd_usr_id = @[upd_usr_id],
+    upd_dt = SYSDATE
+where intg_cd_id = @[intg_cd_id]			]]></sql>
+			<params>
+				<param name="intg_cd_nm" type="12" value="" out="N"/>
+				<param name="intg_cd_desc" type="12" value="" out="N"/>
+				<param name="intg_cd_tp_cd" type="12" value="" out="N"/>
+				<param name="intg_cd_len" type="2" value="" out="N"/>
+				<param name="ownr_sub_sys_cd" type="12" value="" out="N"/>
+				<param name="intg_cd_use_flg" type="12" value="" out="N"/>
+				<param name="upd_usr_id" type="12" value="" out="N"/>
+				<param name="intg_cd_id" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>

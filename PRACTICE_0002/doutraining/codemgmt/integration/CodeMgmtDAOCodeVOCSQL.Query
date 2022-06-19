@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="CodeMgmtDAOCodeVOCSQL">
+			<desc><![CDATA[CodeMgmt]]></desc>
+			<sql><![CDATA[
+INSERT INTO COM_INTG_CD (
+	intg_cd_id,
+    intg_cd_nm,
+    intg_cd_desc,
+    intg_cd_tp_cd,
+    intg_cd_dat_tp_nm,
+    intg_cd_len,
+    ownr_sub_sys_cd,
+    mng_tbl_nm,
+    intg_cd_use_flg,
+    cre_usr_id,
+    cre_dt,
+    upd_usr_id,
+    upd_dt
+) VALUES( 
+	@[intg_cd_id],
+	@[intg_cd_nm],
+	@[intg_cd_desc],
+	@[intg_cd_tp_cd],
+	'VARCHAR2', 
+	@[intg_cd_len], 
+	@[ownr_sub_sys_cd], 
+	@[mng_tbl_nm], 
+	@[intg_cd_use_flg], 
+	@[cre_usr_id],
+	sysdate,
+	@[upd_usr_id],
+	sysdate
+)			]]></sql>
+			<params>
+				<param name="intg_cd_id" type="12" value="" out="N"/>
+				<param name="intg_cd_nm" type="12" value="" out="N"/>
+				<param name="intg_cd_desc" type="12" value="" out="N"/>
+				<param name="intg_cd_tp_cd" type="12" value="" out="N"/>
+				<param name="intg_cd_len" type="2" value="" out="N"/>
+				<param name="ownr_sub_sys_cd" type="12" value="" out="N"/>
+				<param name="mng_tbl_nm" type="12" value="" out="N"/>
+				<param name="intg_cd_use_flg" type="12" value="" out="N"/>
+				<param name="cre_usr_id" type="12" value="" out="N"/>
+				<param name="upd_usr_id" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>
