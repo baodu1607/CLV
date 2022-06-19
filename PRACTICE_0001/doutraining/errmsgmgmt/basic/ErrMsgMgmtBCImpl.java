@@ -123,7 +123,7 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 			
 			//if we have invalid data( because message code already existed)
 			if(invalidMsgCds.length()!=0){
-				//remove lasted "|"
+				//remove "|" at the end
 				invalidMsgCds.deleteCharAt(invalidMsgCds.length()-1);
 				//throw new EventException 
 				throw new EventException(new ErrorHandler("ERR12356", new String[]{invalidMsgCds.toString()}).getMessage());
