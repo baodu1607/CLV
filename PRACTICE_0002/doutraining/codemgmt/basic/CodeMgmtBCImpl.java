@@ -18,18 +18,17 @@ import java.util.List;
 import com.clt.apps.opus.esm.clv.doutraining.codemgmt.integration.CodeMgmtDBDAO;
 import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeDetailVO;
 import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeVO;
-import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.integration.ErrMsgMgmtDBDAO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
 import com.clt.framework.support.layer.basic.BasicCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.vo.ErrMsgVO;
 
 public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
-	
 	private transient CodeMgmtDBDAO dbDao = null;
-	
+	/**
+	 * Constructor
+	 */
 	public CodeMgmtBCImpl() {
 		//create DAO object
 		dbDao = new CodeMgmtDBDAO();
@@ -71,20 +70,20 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 			List<CodeVO> deleteVoList = new ArrayList<CodeVO>();
 			
 			List<CodeDetailVO> deleteCodeDetailList = new ArrayList<CodeDetailVO>();
-			//Invalid code message
+			//Invalid code
 			StringBuilder invalidMsgCds=new StringBuilder();
 			
-			//loop through errMsgVO and base on IbFlag to perform corresponding action
+			//loop through codeVOs and base on IbFlag to perform corresponding action
 			for ( int i=0; i<codeVOs.length; i++ ) {
 				
 				//Insert
 				if ( codeVOs[i].getIbflag().equals("I")){
 					//Condition need to check before inserting
 					CodeVO condition = new CodeVO();
-					//set message code for condition
+					//set IntgCdId for condition
 					condition.setIntgCdId(codeVOs[i].getIntgCdId());
 					
-					//if message code don't exist
+					//if code don't exist
 					if(searchCodeVO(condition).size()==0){
 						//set CreUsrId is current user id
 						codeVOs[i].setCreUsrId(account.getUsr_id());
@@ -95,8 +94,8 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 						//add to inserting list
 						insertVoList.add(codeVOs[i]);
 					}else{
-						//if message code already existed
-						//append invalid message code to invalidMsgCds variable
+						//if code already existed
+						//append invalid code to invalidMsgCds variable
 						invalidMsgCds.append(codeVOs[i].getIntgCdId()+"|");
 					}
 				} else if (codeVOs[i].getIbflag().equals("U")){
@@ -114,7 +113,7 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 				}
 			}
 			
-			//if we have invalid data( because message code already existed)
+			//if we have invalid data (because code already existed)
 			if(invalidMsgCds.length()!=0){
 				//remove "|" at the end
 				invalidMsgCds.deleteCharAt(invalidMsgCds.length()-1);
@@ -131,7 +130,7 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 			if ( updateVoList.size() > 0 ) {
 				dbDao.updateCodeVOs(updateVoList);
 			}
-//			
+			
 //			//if deleting list isn't empty
 			if ( deleteVoList.size() > 0 ) {
 				if(deleteCodeDetailList.size()>0){					
@@ -161,21 +160,21 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 			//List needs to be deleted
 			List<CodeDetailVO> deleteVoList = new ArrayList<CodeDetailVO>();
 			
-			//Invalid code message
+			//Invalid code
 			StringBuilder invalidMsgCds=new StringBuilder();
 			
-			//loop through errMsgVO and base on IbFlag to perform corresponding action
+			//loop through codeDetailVOs and base on IbFlag to perform corresponding action
 			for ( int i=0; i<codeDetailVOs.length; i++ ) {
 				
 				//Insert
 				if ( codeDetailVOs[i].getIbflag().equals("I")){
 					//Condition need to check before inserting
 					CodeDetailVO condition = new CodeDetailVO();
-					//set message code for condition
+					//set IntgCdId for condition
 					condition.setIntgCdId(codeDetailVOs[i].getIntgCdId());
 					condition.setIntgCdValCtnt(codeDetailVOs[i].getIntgCdValCtnt());
 					
-//					if message code don't exist
+//					if code don't exist
 					if(searchCodeDetailVO(condition).size()==0){
 						//set CreUsrId is current user id
 						codeDetailVOs[i].setCreUsrId(account.getUsr_id());
@@ -204,7 +203,7 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 			
 			//if we have invalid data( because message code already existed)
 			if(invalidMsgCds.length()!=0){
-				//remove lasted "|"
+				//remove "|" at the end
 				invalidMsgCds.deleteCharAt(invalidMsgCds.length()-1);
 				//throw new EventException 
 				throw new EventException(new ErrorHandler("ERR12356", new String[]{invalidMsgCds.toString()}).getMessage());
@@ -215,12 +214,12 @@ public class CodeMgmtBCImpl extends BasicCommandSupport implements CodeMgmtBC {
 				dbDao.addCodeDetailVOs(insertVoList);
 			}
 			
-//			if updating list isn't empty
+			//if updating list isn't empty
 			if ( updateVoList.size() > 0 ) {
 				dbDao.updateCodeDetailVOs(updateVoList);
 			}
-////			
-////			//if deleting list isn't empty
+			
+			//if deleting list isn't empty
 			if ( deleteVoList.size() > 0 ) {
 				dbDao.removeCodeDetailVOs(deleteVoList);
 			}

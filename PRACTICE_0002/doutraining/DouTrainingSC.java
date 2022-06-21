@@ -110,7 +110,28 @@ public class DouTrainingSC extends ServiceCommandSupport {
 			}
 			else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
 				eventResponse = initCombox();
+			}else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
+				eventResponse = manageCarrierVO(e);
 			}
+		}
+		return eventResponse;
+	}
+
+	private EventResponse manageCarrierVO(Event e) throws EventException {
+		GeneralEventResponse eventResponse = new GeneralEventResponse();
+		Practice0004Event event = (Practice0004Event)e;
+		CarrierMgmtBC command = new CarrierMgmtBCImpl();
+		try{
+			begin();
+			command.manageCarrierVO(event.getCarrierVOs(),account);
+			eventResponse.setUserMessage(new ErrorHandler("DOU00001").getUserMessage());
+			commit();
+		} catch(EventException ex) {
+			rollback();
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch(Exception ex) {
+			rollback();
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}
 		return eventResponse;
 	}
@@ -132,7 +153,7 @@ public class DouTrainingSC extends ServiceCommandSupport {
 			}
 			if(lnCdList.size()!=0){
 				for(int i=0;i<lnCdList.size();i++){
-					lnCds.append(lnCdList.get(i).getJoCrrCd()+"|");
+					lnCds.append(lnCdList.get(i).getRlaneCd()+"|");
 				}
 				lnCds.deleteCharAt(lnCds.length()-1);
 			}

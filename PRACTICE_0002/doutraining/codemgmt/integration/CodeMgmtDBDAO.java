@@ -8,8 +8,6 @@ import java.util.Map;
 
 import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeDetailVO;
 import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeVO;
-import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.integration.ErrMsgMgmtDBDAOErrMsgVOCSQL;
-import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.vo.ErrMsgVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -19,6 +17,13 @@ import com.clt.framework.support.db.SQLExecuter;
 import com.clt.framework.support.layer.integration.DBDAOSupport;
 
 public class CodeMgmtDBDAO  extends DBDAOSupport{
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Search data
+	 * @param codeVO
+	 * @return List<CodeVO>
+	 * @throws DAOException
+	 */
 	public List<CodeVO> searchCodeVO(CodeVO codeVO) throws DAOException {
 		//Store returning value from Database
 		DBRowSet dbRowset = null;
@@ -31,7 +36,7 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		Map<String, Object> velParam = new HashMap<String, Object>();
 
 		try{
-			//if errMsgVO isn't null
+			//if codeVO isn't null
 			if(codeVO != null){
 				Map<String, String> mapVO = codeVO .getColumnValues();
 				//add all value to param
@@ -58,6 +63,12 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return list;
 	}
 	
+	/**
+	 * Search data
+	 * @param codeDetailVO
+	 * @return List<CodeDetailVO>
+	 * @throws DAOException
+	 */
 	public List<CodeDetailVO> searchCodeDetailVO(CodeDetailVO codeDetailVO) throws DAOException {
 		//Store returning value from Database
 		DBRowSet dbRowset = null;
@@ -70,7 +81,7 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		Map<String, Object> velParam = new HashMap<String, Object>();
 
 		try{
-			//if errMsgVO isn't null
+			//if codeDetailVO isn't null
 			if(codeDetailVO != null){
 				Map<String, String> mapVO = codeDetailVO.getColumnValues();
 				//add all value to param
@@ -97,6 +108,13 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return list;
 	}
 	
+	/**
+	 * add data
+	 * @param codeVO
+	 * @return int[]
+	 * @throws DAOException
+	 * @throws Exception
+	 */
 	public int[] addCodeVOs(List<CodeVO> codeVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
@@ -118,6 +136,13 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return insCnt;
 	}
 	
+	/**
+	 * add data
+	 * @param codeDetailVOs
+	 * @return int[]
+	 * @throws DAOException
+	 * @throws Exception
+	 */
 	public int[] addCodeDetailVOs(List<CodeDetailVO> codeDetailVOs) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
@@ -139,6 +164,13 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return insCnt;
 	}
 	
+	/**
+	 * add data
+	 * @param codeVO
+	 * @return int[]
+	 * @throws DAOException
+	 * @throws Exception
+	 */
 	public int[] updateCodeVOs(List<CodeVO> codeVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
@@ -160,6 +192,13 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return insCnt;
 	}
 	
+	/**
+	 * add data
+	 * @param codeDetailVO
+	 * @return int[]
+	 * @throws DAOException
+	 * @throws Exception
+	 */
 	public int[] updateCodeDetailVOs(List<CodeDetailVO> codeDetailVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
@@ -181,6 +220,13 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return insCnt;
 	}
 	
+	/**
+	 * add data
+	 * @param codeDetailVO
+	 * @return int[]
+	 * @throws DAOException
+	 * @throws Exception
+	 */
 	public int[] removeCodeDetailVOs(List<CodeDetailVO> codeDetailVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
@@ -202,6 +248,13 @@ public class CodeMgmtDBDAO  extends DBDAOSupport{
 		return insCnt;
 	}
 	
+	/**
+	 * add data
+	 * @param codeVO
+	 * @return int[]
+	 * @throws DAOException
+	 * @throws Exception
+	 */
 	public int[] removeCodeVOs(List<CodeVO> codeVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {

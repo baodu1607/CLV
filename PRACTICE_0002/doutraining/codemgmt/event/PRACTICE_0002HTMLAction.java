@@ -14,25 +14,15 @@ package com.clt.apps.opus.esm.clv.doutraining.codemgmt.event;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeDetailVO;
+import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeVO;
 import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.controller.html.HTMLActionException;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
 import com.clt.framework.support.controller.HTMLActionSupport;
 import com.clt.framework.support.controller.html.FormCommand;
-import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeDetailVO;
-import com.clt.apps.opus.esm.clv.doutraining.codemgmt.vo.CodeVO;
-import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.vo.ErrMsgVO;
 
-/**
- * HTTP Parser<br>
- * - com.clt.apps.opus.esm.clv.doutraining 화면을 통해 서버로 전송되는 HTML DOM 객체의 Value를 자바 변수로 Parsing<br>
- * - Parsing 한 정보를 Event로 변환, request에 담아 DouTrainingSC로 실행요청<br>
- * - DouTrainingSC에서 View(JSP)로 실행결과를 전송하는 EventResponse를 request에 셋팅<br>
- * @author phuoc
- * @see DouTrainingEvent 참조
- * @since J2EE 1.6
- */
 
 public class PRACTICE_0002HTMLAction extends HTMLActionSupport {
 
@@ -60,15 +50,16 @@ public class PRACTICE_0002HTMLAction extends HTMLActionSupport {
 			//Create CodeVO object
 			CodeVO codeVO = new CodeVO();
 			
-			//set parameter has name s_err_msg for ErrMsg
+			//set parameter has name s_intg_cd_id for codeVO
 			codeVO.setIntgCdId(JSPUtil.getParameter(request, "s_intg_cd_id",""));
+			//set parameter has name s_ownr_sub_sys_cd for codeVO
 			codeVO.setOwnrSubSysCd(JSPUtil.getParameter(request, "s_ownr_sub_sys_cd",""));
 			//set VO for event
 			event.setCodeVO(codeVO);
 		}else if(command.isCommand(FormCommand.SEARCH01)) {
 			CodeDetailVO codeDetailVO = new CodeDetailVO();
 			
-			//set parameter has name s_err_msg for ErrMsg
+			//set parameter has name s_intg_cd_id for codeVO
 			codeDetailVO.setIntgCdId(JSPUtil.getParameter(request, "s_intg_cd_id",""));
 			//set VO for event
 			event.setCodeDetailVO(codeDetailVO);
