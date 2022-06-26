@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="MoneyMgmtDAOSearchLaneCodeRSQL">
+			<desc><![CDATA[search lane code]]></desc>
+			<sql><![CDATA[
+select 
+	distinct(rlane_cd) 
+from joo_carrier
+where jo_crr_cd IN (
+	#foreach($key IN ${partnerCodes}) 
+		#if($velocityCount < $partnerCodes.size()) 
+			'$key',
+ 		#else '$key' 
+		#end 
+	#end
+)			]]></sql>
+			<params>
+			</params>
+		</query>
+	</querys>
+</sqls>

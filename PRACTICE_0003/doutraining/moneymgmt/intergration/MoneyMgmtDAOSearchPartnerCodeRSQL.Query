@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="MoneyMgmtDAOSearchPartnerCodeRSQL">
+			<desc><![CDATA[Search Partner Code]]></desc>
+			<sql><![CDATA[
+select 
+	distinct(jo_crr_cd) 
+from joo_carrier			]]></sql>
+			<params>
+			</params>
+		</query>
+	</querys>
+</sqls>

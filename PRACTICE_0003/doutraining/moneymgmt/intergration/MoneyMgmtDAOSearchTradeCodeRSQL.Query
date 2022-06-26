@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="MoneyMgmtDAOSearchTradeCodeRSQL">
+			<desc><![CDATA[Search Trade Code]]></desc>
+			<sql><![CDATA[
+select 
+	distinct(trd_cd)
+from joo_carrier
+where rlane_cd = @[rlane_cd]
+	and jo_crr_cd IN (
+		#foreach($key IN ${partnerCodes}) 
+			#if($velocityCount < $partnerCodes.size()) 
+				'$key',
+ 			#else 
+				'$key' 
+			#end 	
+		#end
+)			]]></sql>
+			<params>
+				<param name="rlane_cd" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>
