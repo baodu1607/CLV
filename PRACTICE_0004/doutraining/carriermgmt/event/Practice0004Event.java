@@ -4,16 +4,15 @@
 *@FileTitle : Error Message Management
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.11
+*@LastModifyDate : 2022.06.28
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2022.06.11 
+* 2022.06.28
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.doutraining.carriermgmt.event;
 
 import com.clt.apps.opus.esm.clv.doutraining.carriermgmt.vo.CarrierVO;
-import com.clt.apps.opus.esm.clv.doutraining.errmsgmgmt.vo.ErrMsgVO;
 import com.clt.framework.support.layer.event.EventSupport;
 
 public class Practice0004Event extends EventSupport {

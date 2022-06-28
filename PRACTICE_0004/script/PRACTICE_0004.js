@@ -44,7 +44,6 @@ function processButtonClick() {
         case "btn_Retrieve":
         	//call doActionIBSheet with action is IBSEARCH
             doActionIBSheet(sheetObject1,comboObject1, formObj, IBSEARCH);
-//        	console.log(FormQueryString(formObj));
             break;
         case "btn_calendar_dt_fr":
 			 var calendar = new ComCalendar();
@@ -67,11 +66,7 @@ function processButtonClick() {
         	doActionIBSheet(sheetObject1,comboObject1, formObj, IBDOWNEXCEL);
         	break;
         case "btn_Save":
-        	// form need to be validated
-//            if (validateForm(sheetObject1)) {
-            	//call doActionIBSheet with action is IBSAVE
-                doActionIBSheet(sheetObject1, comboObject1, formObj, IBSAVE);
-//            }
+            doActionIBSheet(sheetObject1, comboObject1, formObj, IBSAVE);
             break;
         default:
             break;
@@ -133,7 +128,7 @@ function initSheet(sheetObj, sheetNo) {
 					    {Type:"Text",      Hidden:0, Width:200, Align:"Center",  SaveName:"upd_dt",        KeyField:0, UpdateEdit:0, InsertEdit:0}, 
 					    {Type:"Text",      Hidden:0, Width:200, Align:"Left",    SaveName:"upd_usr_id",    KeyField:0, UpdateEdit:0, InsertEdit:0}
 				    ];
-			 InitColumns(cols);
+			 	InitColumns(cols);
 		        SetEditable(1);
 		        SetWaitImageVisible(0);
                 ComResizeSheet(sheetObjects[0]);
@@ -314,16 +309,13 @@ function sheet1_OnSaveEnd(sheetObj, Code, Msg){
 	}
 	//otherwise we get all row have status 'I' (Insert)
 	var invalidData=sheetObj.FindStatusRow('I');
-//	console.log(invalidData);
 	//slipt by ';'
 	var rows=invalidData.split(';');
-//	console.log(rows);
 	
 	//loop through rows
 	for(var i=0;i<rows.length;i++){
 		//get value of error message code at current cell
 		var code = getCellValue(sheetObjects[0],"jo_crr_cd")+"-"+getCellValue(sheetObjects[0],"rlane_cd");
-//		console.log(code);
 		//if it is invalid
 		if(Msg.includes(code)){
 			//change the row color to red 
@@ -389,7 +381,9 @@ function setCrrCd(aryPopupData){
 }
 
 function sheet1_OnChange(sheetObj,Row,Col){
-	isValid(sheetObj,Row,Col);
+	var colName=sheetObj.ColSaveName(Col);
+	if (colName == 'jo_crr_cd')
+		isValid(sheetObj,Row,Col);
 }
 
 function isValid(sheetObj,Row,Col){

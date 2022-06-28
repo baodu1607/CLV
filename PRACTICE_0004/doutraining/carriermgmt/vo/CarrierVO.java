@@ -13,7 +13,6 @@
 
 package com.clt.apps.opus.esm.clv.doutraining.carriermgmt.vo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

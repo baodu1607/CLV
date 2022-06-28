@@ -103,7 +103,6 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
             formObj.f_cmd.value = SEARCH01;
             console.log(FormQueryString(formObj));
             sheetObj.DoSearch("CUS_POPUPGS.do", FormQueryString(formObj));
-//            console.log(sheetObj.GetSearchData("CUS_POPUPGS.do", FormQueryString(formObj)));
             break;
         default:
             break;
