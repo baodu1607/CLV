@@ -4,13 +4,13 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.25
+*@LastModifyDate : 2022.07.04
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2022.06.25 
+* 2022.07.04 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration ;
+package com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -71,7 +71,7 @@ public class MoneyMgmtDBDAODetailVORSQL implements ISQLTemplate{
 		params.put("date_fr",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration ").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration").append("\n"); 
 		query.append("FileName : MoneyMgmtDBDAODetailVORSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
@@ -158,7 +158,7 @@ public class MoneyMgmtDBDAODetailVORSQL implements ISQLTemplate{
 		query.append("						   AND CRR.DELT_FLG         = 'N'" ).append("\n"); 
 		query.append("						   AND CRR.JO_CRR_CD        = STL.JO_CRR_CD" ).append("\n"); 
 		query.append("						   AND CRR.RLANE_CD         = STL.RLANE_CD" ).append("\n"); 
-		query.append("						   AND CRR.MODI_COST_CTR_CD = @[trd_cd]" ).append("\n"); 
+		query.append("						   AND CRR.TRD_CD = @[trd_cd]" ).append("\n"); 
 		query.append("					 )" ).append("\n"); 
 		query.append("	#end" ).append("\n"); 
 		query.append("    AND INV.RJCT_CMB_FLG  = 'N'" ).append("\n"); 
@@ -180,9 +180,7 @@ public class MoneyMgmtDBDAODetailVORSQL implements ISQLTemplate{
 		query.append("    AND INV.SLP_SER_NO    = CSR.SLP_SER_NO(+)" ).append("\n"); 
 		query.append(")INV" ).append("\n"); 
 		query.append("WHERE 1=1" ).append("\n"); 
-		query.append("GROUP BY GROUPING SETS ((JO_CRR_CD, RLANE_CD, CSR_NO, APRO_FLG, CUST_VNDR_CNT_CD, CUST_VNDR_SEQ, PRNR_REF_NO, CUST_VNDR_ENG_NM, LOCL_CURR_CD, INV_NO, RE_DIVR_CD, JO_STL_ITM_CD)," ).append("\n"); 
-		query.append("                         (LOCL_CURR_CD, INV_NO)," ).append("\n"); 
-		query.append("                         (LOCL_CURR_CD))" ).append("\n"); 
+		query.append("GROUP BY JO_CRR_CD, RLANE_CD, CSR_NO, APRO_FLG, CUST_VNDR_CNT_CD, CUST_VNDR_SEQ, PRNR_REF_NO, CUST_VNDR_ENG_NM, LOCL_CURR_CD, INV_NO, RE_DIVR_CD, JO_STL_ITM_CD" ).append("\n"); 
 		query.append(" ORDER BY INV_NO, JO_CRR_CD" ).append("\n"); 
 
 	}

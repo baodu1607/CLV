@@ -59,16 +59,6 @@
 		out.println(e.toString());
 	}
 %>
-<!--<head> 
-<style>
-#date_fr:read-only, #date_to:read-only {
-  background-color: #9cc2e5;
-  color: black;
-  font-weight: bold;
-  text-align: center; 
-}
-</style>
-</head>-->
 <script language="javascript">
 	var partnerCodes = "All|<%=partnerCodes%>";
 	function setupPage(){
@@ -79,62 +69,96 @@
 		loadPage();
 	}
 </script>
-<form name="form" id="form">
-<input type="hidden" name="f_cmd"> <input type="hidden" name="pagerows">
-<input type="hidden" name="value_partner">
+<form name="form">
+	<input type="hidden" name="f_cmd">
+	<input type="hidden" name="pagerows">
+	<!-- page_title_area(S) -->
 	<div class="page_title_area clear">
-		<h2 class="page_title">
-			<button type="button">
-				<span id="title">ESM DOU 0108</span>
-			</button>
-		</h2>
-		<div class="opus_design_btn">
-			<button type="button" class="btn_accent" name="btn_Retrieve" id="btn_Retrieve">Retrieve</button><!--
-			--><button type="button" class="btn_normal" name="btn_New" id="btn_New">New</button><!--
-			--><button type="button" class="btn_normal" name="btn_DownExcel"id="btn_DownExcel">Down Excel</button><!-- 
-			--><button type="button" class="btn_normal" name="btn_DownExcel2" id="btn_DownExcel2">Down Excel2</button>
+		<!-- page_title(S) -->
+		<h2 class="page_title"><button type="button"><span id="title"></span></button></h2>
+		<!-- page_title(E) -->
+		<!-- opus_design_btn(S) -->
+		<div class="opus_design_btn"><!-- 
+		--><button type="button" class="btn_accent" name="btn_Retrieve" id="btn_Retrieve">Retrieve</button><!-- 
+		--><button type="button" class="btn_normal" name="btn_New" id="btn_New">New</button><!--  
+		--><button type="button" class="btn_normal" name="btn_DownExcel" id="btn_DownExcel">Down Excel</button><!-- 
+		--><button type="button" class="btn_normal" name="btn_Down" id="btn_DownExcel2">DownExcel2</button>
 		</div>
+		<!-- opus_design_btn(E) -->
+		<!-- page_location(S) -->
 		<div class="location">
 			<span id="navigation"></span>
 		</div>
+		<!-- page_location(E) -->
 	</div>
-	<div class="wrap_search">
-		<div class="opus_design_inquiry">
+	<!-- page_title_area(E) -->
+
+	<!-- wrap_search(S) -->
+	<div class="wrap_search_tab">
+		<!-- opus_design_inquiry(S) -->
+		<div class="opus_design_inquiry wFit">
 			<table>
 				<tbody>
-					<tr>
-						<th width="100">Year Month</th>
-						<td width="350">
-							<input type="text" style="width: 100px;" class="input1" value="" name="s_date_fr" id="date_fr" readonly><!--
+					<colgroup>
+						<col width="80px">
+						<col width="100px">
+						<col width="105px">
+						<col width="75px">
+						<col width="55px">
+						<col width="75px">
+						<col width="55px">
+						<col width="*" />
+					</colgroup>
+					<tr class="h23">
+						<th>Year Month</th>
+						<td><input type="text" style="width: 100px;" class="input1" value="" name="s_date_fr" id="date_fr" readonly><!--
 							--><button type="button" class="btn_left" name="btn_date_fr_down" id="btn_date_fr_down"></button><!--
 							--><button type="button" class="btn_right" name="btn_date_fr_up" id="btn_date_fr_up"></button><!--
 							--><input type="text" style="width: 100px;" class="input1" value="" name="s_date_to" id="date_to" readonly><!--
 							--><button type="button" class="btn_left" name="btn_date_to_down" id="btn_date_to_down"></button><!--
 							--><button type="button" class="btn_right" name="btn_date_to_up" id="btn_date_to_up"></button>
 						</td>
-						<th width="70">Partner</th>
-						<td width="70"><script type="text/javascript">ComComboObject('s_partner_code', 1, 100, 1, 0, 0);</script></td>
-						<th width="70">Lane</th>
-						<td width="70"><script type="text/javascript">ComComboObject('s_lane_code', 1, 100, 1, 0, 0);</script></td>
-						<th width="70">Trade</th>
-						<td><script type="text/javascript">ComComboObject('s_trade_code', 1, 100, 1, 0, 0);</script></td>
+						<th>Partner</th>
+						<td>
+							<script type="text/javascript">ComComboObject('s_partner_code', 1, 100, 0, 0);</script>
+						</td>
+						<th>Lane</th>
+						<td>
+							<script type="text/javascript">ComComboObject('s_lane_code', 1, 100, 0, 0);</script>
+						</td>
+						<th>Trade</th>
+						<td>
+							<script type="text/javascript">ComComboObject('s_trade_code', 1, 100, 0, 0);</script>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<!-- opus_design_inquiry(E) -->
 	</div>
+	<!-- wrap_search(E) -->
 
-	<div class="wrap_result">
-		<div class="opus_design_tab sm">
-			<script type="text/javascript">ComTabObject('tab1')</script>
-		</div>
-
-		<div class="opus_design_grid clear" name="tabLayer" id="tabLayer">
-			<script language="javascript">ComSheetObject('sheet1');</script>
-		</div>
-
-		<div class="opus_design_grid clear" name="tabLayer" id="tabLayer">
-			<script language="javascript">ComSheetObject('sheet2');</script>
-		</div>
-	</div>
+	<!-- wrap_result(S) -->
+        <div class="wrap_result">
+            <div class="opus_design_tab sm">
+                <script type="text/javascript">ComTabObject('tab1')</script>
+            </div>
+            <div class="opus_design_inquiry">
+                <!-- opus_design_grid(S) -->
+                <div class="opus_design_grid  clear" name="tabLayer" id="tabLayer">
+                	<script language="javascript">ComSheetObject('sheet1');</script>
+                </div>
+                <!-- opus_design_grid(E) -->
+            </div>
+            
+            <div class="opus_design_inquiry">
+                <!-- opus_design_grid(S) -->
+                <div class="opus_design_grid  clear" name="tabLayer" id="tabLayer">
+                	<script language="javascript">ComSheetObject('sheet2');</script>
+                </div>
+                <!-- opus_design_grid(E) -->
+            </div>
+        </div>
+      
+      <!-- wrap_result(E) -->
 </form>

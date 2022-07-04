@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.25
+*@LastModifyDate : 2022.07.04
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2022.06.25 
+* 2022.07.04 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration;
@@ -175,9 +175,7 @@ public class MoneyMgmtDBDAOSummaryVORSQL implements ISQLTemplate{
 		query.append("    AND INV.SLP_SER_NO    = CSR.SLP_SER_NO(+)" ).append("\n"); 
 		query.append("    ) INV" ).append("\n"); 
 		query.append(" WHERE 1=1" ).append("\n"); 
-		query.append(" GROUP BY GROUPING SETS ((JO_CRR_CD, RLANE_CD, CSR_NO, APRO_FLG, CUST_VNDR_CNT_CD, CUST_VNDR_SEQ, PRNR_REF_NO, CUST_VNDR_ENG_NM, LOCL_CURR_CD, INV_NO)," ).append("\n"); 
-		query.append("                         (LOCL_CURR_CD, INV_NO)," ).append("\n"); 
-		query.append("                         (LOCL_CURR_CD))" ).append("\n"); 
+		query.append(" GROUP BY JO_CRR_CD, RLANE_CD, CSR_NO, APRO_FLG, CUST_VNDR_CNT_CD, CUST_VNDR_SEQ, PRNR_REF_NO, CUST_VNDR_ENG_NM, LOCL_CURR_CD, INV_NO" ).append("\n"); 
 		query.append(" ORDER BY INV_NO, JO_CRR_CD" ).append("\n"); 
 
 	}

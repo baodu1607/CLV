@@ -19,6 +19,9 @@ var cfmGtDtOver3M=false;
 var searchDetail="";
 var searchSummary="";
 var firstLoad=true;
+var isDbClick=false;
+var searchForDbl ="";
+
 
 document.onclick=processButtonClick;
 
@@ -38,25 +41,19 @@ function processButtonClick() {
     	    		}
 	        	}
 	    		doActionIBSheet(getCurrentSheet(), formObject, IBSEARCH);
-//	    		doActionIBSheet(sheetObject2, formObject, IBSEARCH);
 	        	break;
 	        case "btn_date_fr_up":
 	        	if(!isValidDate()){
 	        		ComShowMessage("Start date must be earlier than end date");
 	            	break;
 	        	}
-	        	addMonth(formObject.date_fr, 1);
-//	        	yearmonth_onchange();
+	        	addMonth(formObject.date_fr, 1); 
 	        	break;
 	        case "btn_date_fr_down":
 	        	addMonth(formObject.date_fr, -1);
-//	        	yearmonth_onchange();
-//	        	excuteCheck();
 	        	break;
 	        case "btn_date_to_up":
 	        	addMonth(formObject.date_to, 1);
-//	        	yearmonth_onchange();
-//	        	excuteCheck();
 	        	break;
 	        case "btn_date_to_down":
 	        	if(!isValidDate()){
@@ -64,7 +61,6 @@ function processButtonClick() {
 	            	break;
 	        	}
 	        	addMonth(formObject.date_to, -1);
-//	        	yearmonth_onchange();
 	        	break;
 	        case "btn_New":
 	        	doActionIBSheet(sheetObject1,formObject,IBRESET);
@@ -89,11 +85,6 @@ function processButtonClick() {
 
 function loadPage(){
 	initCalender();
-//	initControl();
-//	document.getElementById("s_partner_code_text").onchange = function(e) {console.log(e.target.value)};
-//	document.getElementById("s_partner_code_text").addEventListener('mouseenter', e => {
-//		  console.log(e);
-//		});
 	for (var i = 0; i < comboObjects.length; i++) {
 		initCombo(comboObjects[i], i);
 	}
@@ -109,7 +100,6 @@ function loadPage(){
 		ComEndConfigSheet(sheetObjects[i]);
 	}
 	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
-	doActionIBSheet(sheetObjects[1], document.form, IBSEARCH);	
 }
 
 function setSheetObject(sheet_obj){
@@ -133,7 +123,7 @@ function initSheet(sheetObj,sheetNo) {
 	
 	            SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:1 } );
 	
-	            var info    = { Sort:1, ColMove:1, HeaderCheck:0, ColResize:1 };
+	            var info    = { Sort:0, ColMove:0, HeaderCheck:0, ColResize:1 };
 	            var headers = [ { Text: HeadTitle1, Align: "Center"},
 	                            { Text: HeadTitle2, Align: "Center"}];
 	            InitHeaders(headers, info);
@@ -143,18 +133,18 @@ function initSheet(sheetObj,sheetNo) {
 		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "jo_crr_cd",       KeyField: 1}, 
 		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "rlane_cd",        KeyField: 1, Format: ""}, 
 		       	             { Type: "Text",   Hidden: 0, Width: 150, Align: "Center", ColMerge: 0, SaveName: "inv_no",          KeyField: 1, Format: ""}, 
-		       	             { Type: "Text",   Hidden: 0, Width: 200, Align: "Center",   ColMerge: 0, SaveName: "csr_no",          KeyField: 1, Format: ""}, 
-		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center",   ColMerge: 0, SaveName: "apro_flg",        KeyField: 1, Format: ""},
+		       	             { Type: "Text",   Hidden: 0, Width: 200, Align: "Center",   ColMerge: 0, SaveName: "csr_no",        KeyField: 1, Format: ""}, 
+		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center",   ColMerge: 0, SaveName: "apro_flg",      KeyField: 1, Format: ""},
 		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "locl_curr_cd",    KeyField: 1, Format: ""},
-		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_rev_act_amt", KeyField: 1, Format: ""},
-		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_exp_act_amt", KeyField: 1, Format: ""},
+		       	             { Type: "Float",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_rev_act_amt", KeyField: 1, Format: ""},
+		       	          	 { Type: "Float",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_exp_act_amt", KeyField: 1, Format: ""},
 		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "prnr_ref_no",     KeyField: 1, Format: ""},
 		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "cust_vndr_eng_nm",KeyField: 1, Format: ""}
 		       	             ];
 	            InitColumns(cols);
 				SetEditable(0);
 				SetWaitImageVisible(0);
-				SetSheetHeight(500);
+				ShowSubSum([{StdCol:"inv_no" , SumCols:"7|8",ShowCumulate:0,CaptionText:" ",CaptionCol:3}]);
 			}
 			break;
 		case 2:
@@ -164,7 +154,7 @@ function initSheet(sheetObj,sheetNo) {
 				
 				SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:1 } );
 				
-	            var info    = { Sort:1, ColMove:1, HeaderCheck:0, ColResize:1 };
+	            var info    = { Sort:0, ColMove:0, HeaderCheck:0, ColResize:1 };
 	            var headers = [ { Text: HeadTitle1, Align: "Center"},
 	                            { Text: HeadTitle2, Align: "Center"}];
 	            InitHeaders(headers, info);
@@ -176,18 +166,20 @@ function initSheet(sheetObj,sheetNo) {
 		       	             { Type: "Text",   Hidden: 0, Width: 150, Align: "Center", ColMerge: 0, SaveName: "inv_no",          KeyField: 1, Format: ""}, 
 		       	             { Type: "Text",   Hidden: 0, Width: 200, Align: "Center", ColMerge: 0, SaveName: "csr_no",          KeyField: 1, Format: ""}, 
 		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "apro_flg",        KeyField: 1, Format: ""},
-		       	             { Type: "Combo",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "rev_exp",         KeyField: 1, Format: "", ComboText: "Rev|Exp", ComboCode: "R|E"},
+		       	             { Type: "Combo",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "rev_exp",        KeyField: 1, Format: "", ComboText: "Rev|Exp", ComboCode: "R|E"},
 		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "item",        	 KeyField: 1, Format: ""},
 		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "locl_curr_cd",    KeyField: 1, Format: ""},
-		       	             { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_rev_act_amt", KeyField: 1, Format: ""},
-		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_exp_act_amt", KeyField: 1, Format: ""},
+		       	             { Type: "Float",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_rev_act_amt", KeyField: 1, Format: ""},
+		       	          	 { Type: "Float",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "inv_exp_act_amt", KeyField: 1, Format: ""},
 		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "prnr_ref_no",     KeyField: 1, Format: ""},
 		       	          	 { Type: "Text",   Hidden: 0, Width: 100, Align: "Center", ColMerge: 0, SaveName: "cust_vndr_eng_nm",KeyField: 1, Format: ""}
 		       	             ];
 		            InitColumns(cols);
 					SetEditable(0);
 					SetWaitImageVisible(0);
-					SetSheetHeight(500);
+					ShowSubSum([{StdCol:"inv_no" , SumCols:"9|10",ShowCumulate:0,CaptionText:" ",CaptionCol:3}]);
+					SetSumFontBold(1);
+					showTotalSum(sheetObj);
 			}
 			break;
 	}
@@ -212,11 +204,11 @@ function tab1_OnChange(tabObj, nItem)
 	objs[nItem].style.display="Inline";		
 	//--------------- this is important! --------------------------//
 	for(var i = 0; i<objs.length; i++){
-		  if(i != nItem){
-		   objs[i].style.display="none";
-		   objs[beforetab].style.zIndex=objs[nItem].style.zIndex - 1 ;
-		  }
-		}
+	  if(i != nItem){
+	   objs[i].style.display="none";
+	   objs[beforetab].style.zIndex=objs[nItem].style.zIndex - 1 ;
+	  }
+	}
 	//------------------------------------------------------//
 	beforetab=nItem;
 	handleOnchangeTab();
@@ -226,23 +218,18 @@ function tab1_OnChange(tabObj, nItem)
 function initCombo(comboObj, comboNo) {
 	switch(comboNo){
 	    case 0:
-//	    	comboObj.SetTitle("All")
-//	    	comboObj.SetTitleVisible(true);
-//	    	comboObj.SetEnableAllCheckBtn(true);
+	    	comboObj.SetDropHeight(250);
 	    	comboObj.SetMultiSelect(1);
 	    	addComboItem(comboObj, partnerCodes);
 	    	comboObj.SetItemCheck(0,true,0);
-//	    	checkAllItem(comboObj, comboNo , i);
 	    	comboObjects[1].SetEnable(false);
 	    	comboObjects[2].SetEnable(false);
 	    	break;
 	    case 1:
 	    	addComboItem(comboObj, laneCodes);
-//	    	setLaneValue("All");
 		break;
 	    case 2:
 	    	addComboItem(comboObj, tradeCodes);
-//	    	setTradeValue("All");
 		break;
 	}
 	
@@ -300,32 +287,37 @@ function addComboItem(comboObj, comboItems) {
 	}   		
 }
 
-function enableLaneCombo(){
+function enableLaneCombo(generate){
+	setLaneValue("");
 	var partnerValue=getPartnerValue();
 	if(partnerValue=='All'){
 		comboObjects[1].SetEnable(false);
-		setLaneValue("");
 	}else{
 		comboObjects[1].SetEnable(true);
-		generateComboData(1);
+		if(generate){
+			generateComboData(1);
+		}
 	}
 }
 
-function enableTradeCombo(){
+function enableTradeCombo(generate){
+	setTradeValue("");
 	var laneValue=getLaneValue();
 	if(laneValue==""){
 		comboObjects[2].SetEnable(false);
 		setTradeValue("");
 	}else{
 		comboObjects[2].SetEnable(true);
-		generateComboData(2);
+		if(generate){
+			generateComboData(2);
+		}
 	}
 }
 
 function generateComboData(comboNo){
-	
 	comboObj = comboObjects[comboNo];
 	comboObj.RemoveAll();
+	ComOpenWait(true);
 	if(comboNo==1){//Lane combo
 		document.form.f_cmd.value = SEARCH02;
 		var xml = sheetObjects[0].GetSearchData("ESM_DOU_0108GS.do", FormQueryString(document.form));
@@ -335,14 +327,11 @@ function generateComboData(comboNo){
 		var xml = sheetObjects[0].GetSearchData("ESM_DOU_0108GS.do", FormQueryString(document.form));
 		tradeCodes = ComGetEtcData(xml,"tradeCodes");
 	}
+	ComOpenWait(false);
 	initCombo(comboObj, comboNo);
 }
 
 function isValidDate(){
-//	var from=document.form.date_fr.value;
-//	var to =document.form.date_to.value;
-//	fDate = new Date(from);
-//	var tDate = new Date(to);
 	var from=new Date(document.form.date_fr.value);
 	var to = new Date(document.form.date_to.value);
 	return from < to;
@@ -352,26 +341,26 @@ function s_partner_code_OnCheckClick(comboObj,index,value,status){
 	if(status){
 		if(value=="All"){
 			checkAllItem(comboObj,false);
-//			setLaneValue("");
 		}else if(comboObj.GetItemCheck(0)){
 			comboObj.SetItemCheck(0,false,false);
 		}else if(isCheckAllItem(comboObj)){
 			checkAllItem(comboObj,false);
 			comboObj.SetItemCheck(0,true,false);
-//			setLaneValue("");
 		}
 	}else if(getPartnerValue()==""){
 		comboObj.SetItemCheck(0,true,false);
-//		setLaneValue("");
 	}
 	enableLaneCombo();
 	enableTradeCombo();
 }
-function s_lane_code_OnChange(){
-	enableTradeCombo();
+
+function s_partner_code_OnBlur(){
+	enableLaneCombo(true);
+	enableTradeCombo(true);
 }
-function s_trade_code_OnCheckClick(comboObj){
-//	renameComboValue(comboObj,3);
+
+function s_lane_code_OnChange(){
+	enableTradeCombo(true);
 }
 
 //{initCalender} functions that define the basic properties of the date on the screen
@@ -386,6 +375,7 @@ function addMonth(obj, month){
 	if (obj.value != ""){
 			obj.value = ComGetDateAdd(obj.value + "-01", "M", month).substr(0,7);
 	}
+	getCurrentSheet().RemoveAll();
 }
  //Get format date
 function GetDateFormat(obj, sFormat){
@@ -408,13 +398,20 @@ function doActionIBSheet(sheetObj,formObj,sAction) {
 		case IBSEARCH: // retrieve
  			if (sheetObj.id == "sheet1" ) {
  				searchSummary = getCurrentSearchOption();
+ 				searchForDbl = FormQueryString(formObj);
  				formObj.f_cmd.value = SEARCH;
 			}
 			else if (sheetObj.id == "sheet2"){
 				searchDetail = getCurrentSearchOption();
 				formObj.f_cmd.value = SEARCH01;
 			}
- 			sheetObj.DoSearch("ESM_DOU_0108GS.do", FormQueryString(formObj));
+ 			if(!isDbClick){
+ 				searchForDbl = FormQueryString(formObj);
+ 			}else{
+ 				searchDetail = searchSummary;
+ 			}
+ 			var xml = sheetObj.GetSearchData("ESM_DOU_0108GS.do", searchForDbl);
+ 			sheetObj.LoadSearchData(xml,{Sync:1});
 			break;
 		case IBRESET:
 			resetForm(formObj);
@@ -437,7 +434,6 @@ function doActionIBSheet(sheetObj,formObj,sAction) {
 			break;
 	}
 }
-
 
 function resizeSheet() {
 	for (var i = 0; i < sheetObjects.length; i++) {
@@ -464,6 +460,23 @@ function sheet1_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) {
 //Handling event after searching
 function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
 	ComOpenWait(false);
+	if(sheetObj.RowCount()>0){
+		showTotalSum(sheetObj);
+	}
+	hightLightSum(sheetObj);
+}
+
+function sheet2_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) { 
+	ComOpenWait(true);
+}
+
+//Handling event after searching
+function sheet2_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+	ComOpenWait(false);
+	if(sheetObj.RowCount()>0){
+		showTotalSum(sheetObj);
+	}
+	hightLightSum(sheetObj);
 }
 
 function checkOverThreeMonth() {
@@ -473,7 +486,6 @@ function checkOverThreeMonth() {
     months = (to.getFullYear() - from.getFullYear()) * 12;
     months -= from.getMonth();
     months += to.getMonth();
-//    return months <= 0 ? 0 : months;
     return months < 3 ? false : true;
 }
 
@@ -494,22 +506,22 @@ function getCurrentSearchOption(){
 }
 
 function handleOnchangeTab(){
+	console.log(isDbClick);
 	if(firstLoad) {
 		firstLoad=false;
 		return;
 	}
-	
+	if(isDbClick){
+		isDbClick=false;
+		return;
+	}
 	var currentSheet=getCurrentSheet();
 	var formQuery = getCurrentSearchOption();
-
-	if(searchSummary!=formQuery&&searchSummary!=searchDetail){
-		if (confirm("Search data was changed. Do you want to retrieve?")) {
-			doActionIBSheet(currentSheet,document.form,IBSEARCH);
-		} else {
-			return;
-		}
-	}
-	if(searchSummary==searchDetail&&searchSummary!=formQuery){
+	console.log(searchSummary);
+	console.log(formQuery);
+	console.log(searchDetail);
+	if(searchSummary!=formQuery&&formQuery!=searchDetail){
+		console.log(78552222);
 		if (confirm("Search data was changed. Do you want to retrieve?")) {
 			doActionIBSheet(currentSheet,document.form,IBSEARCH);
 		} else {
@@ -518,13 +530,100 @@ function handleOnchangeTab(){
 	}
 	if(currentSheet.id=="sheet1"){//Summary Sheet
 		if(searchSummary!=formQuery){
-//			searchSummary=formQuery;
 			doActionIBSheet(currentSheet, document.form, IBSEARCH);
 		}
 	}else{
 		if(searchDetail!=formQuery){
-//			searchDetail=formQuery;
 			doActionIBSheet(currentSheet, document.form, IBSEARCH);
 		}
 	}
 }
+
+function sheet1_OnDblClick(sheetObj, Row, Col) {
+	formObj = document.form;
+	isDbClick=true;
+	if(searchDetail!=searchSummary||sheetObjects[1].RowCount()==0){
+		doActionIBSheet(sheetObjects[1], document.form, IBSEARCH);
+	}
+	if(sheetObj.GetCellValue(Row,"jo_crr_cd")!=""){
+		var saveNames=["jo_crr_cd","rlane_cd","inv_no","csr_no","locl_curr_cd","prnr_ref_no"];
+		var summaryData=getDataRow(sheetObjects[0],Row,saveNames);
+		var size=sheetObjects[1].RowCount();
+		for(var i=2;i<=size;i++){
+			if(summaryData==getDataRow(sheetObjects[1],i,saveNames)){
+				tabObjects[0].SetSelectedIndex(1);
+				sheetObjects[1].SetSelectRow(i);
+				return;
+			}
+		}
+		ComShowCodeMessage('COM132701');
+	}
+}
+
+function getDataRow(sheetObj,row,saveNames){
+	var result="";
+	for(var i=0; i<saveNames.length;i++){
+		result+=sheetObj.GetCellValue(row,saveNames[i]);
+	}
+	return result;
+}
+
+function hightLightSum(sheetObj){
+	sheetObj.SetRangeBackColor(2,0,sheetObj.LastRow()-2,12,"white")
+	if (sheetObj.RowCount() > 0) {
+		var lastRowIndex=sheetObj.LastRow();
+		sheetObj.SetRowBackColor(lastRowIndex, "#fa7773");
+		sheetObj.SetRowBackColor(lastRowIndex-1, "#fa7773");
+		if(sheetObj.id=="sheet1"){
+			for(var i=6;i<=8;i++){
+				sheetObj.SetCellFontBold(lastRowIndex, i, 1);
+				sheetObj.SetCellFontBold(lastRowIndex-1, i, 1);
+			}
+		}else{
+			for(var i=8;i<=10;i++){
+				sheetObj.SetCellFontBold(lastRowIndex, i, 1);
+				sheetObj.SetCellFontBold(lastRowIndex-1, i, 1);
+			}
+		}
+	}	
+}
+
+function showTotalSum(sheetObj){
+	var revTotalVND = 0;
+	var expTotalVND = 0;
+	var revTotalUSD = 0;
+	var expTotalUSD = 0;
+	
+	var subsum = sheetObj.FindSubSumRow();
+	var arrSubsum = subsum.split("|");
+	
+	for (var i = 0; i < arrSubsum.length; i++) {
+		var locl_curr_cd=sheetObj.GetCellValue(arrSubsum[i]-1,"locl_curr_cd");
+		sheetObj.SetCellValue(arrSubsum[i],"locl_curr_cd",locl_curr_cd);
+		sheetObj.SetCellFont("FontBold", arrSubsum[i],"locl_curr_cd",arrSubsum[i],"inv_exp_act_amt",1);
+		if(locl_curr_cd=="VND"){
+			revTotalVND+=+sheetObj.GetCellValue(arrSubsum[i],"inv_rev_act_amt");
+			expTotalVND+=+sheetObj.GetCellValue(arrSubsum[i],"inv_exp_act_amt");
+		}else{
+			revTotalUSD+=+sheetObj.GetCellValue(arrSubsum[i],"inv_rev_act_amt");
+			expTotalUSD+=+sheetObj.GetCellValue(arrSubsum[i],"inv_exp_act_amt");
+		}	
+	}
+	sheetObj.DataInsert(-1);
+	sheetObj.SetCellValue(sheetObj.LastRow(),"locl_curr_cd","VND");
+	sheetObj.SetCellValue(sheetObj.LastRow(),"inv_rev_act_amt",revTotalVND);
+	sheetObj.SetCellValue(sheetObj.LastRow(),"inv_exp_act_amt",expTotalVND);
+	sheetObj.SetCellValue(sheetObj.LastRow(),"rev_exp","");
+	
+	sheetObj.DataInsert(-1);
+	sheetObj.SetCellValue(sheetObj.LastRow(),"locl_curr_cd","USD");
+	sheetObj.SetCellValue(sheetObj.LastRow(),"inv_rev_act_amt",revTotalUSD);
+	sheetObj.SetCellValue(sheetObj.LastRow(),"inv_exp_act_amt",expTotalUSD);
+	sheetObj.SetCellValue(sheetObj.LastRow(),"rev_exp","");
+	
+	sheetObj.SetSelectRow(-1);
+}
+
+
+
+
