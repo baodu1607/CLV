@@ -143,22 +143,18 @@
             <div class="opus_design_tab sm">
                 <script type="text/javascript">ComTabObject('tab1')</script>
             </div>
-            <div class="opus_design_inquiry">
-                <!-- opus_design_grid(S) -->
-                <div class="opus_design_grid  clear" name="tabLayer" id="tabLayer">
-                	<script language="javascript">ComSheetObject('sheet1');</script>
-                </div>
-                <!-- opus_design_grid(E) -->
+               <!-- opus_design_grid(S) -->
+               <div class="opus_design_grid  clear" name="tabLayer" id="tabLayer">
+               	<script language="javascript">ComSheetObject('sheet1');</script>
+               </div>
+               <!-- opus_design_grid(E) -->
+           
+               <!-- opus_design_grid(S) -->
+               <div class="opus_design_grid  clear" name="tabLayer" id="tabLayer">
+               	<script language="javascript">ComSheetObject('sheet2');</script>
+               </div>
+               <!-- opus_design_grid(E) -->
             </div>
-            
-            <div class="opus_design_inquiry">
-                <!-- opus_design_grid(S) -->
-                <div class="opus_design_grid  clear" name="tabLayer" id="tabLayer">
-                	<script language="javascript">ComSheetObject('sheet2');</script>
-                </div>
-                <!-- opus_design_grid(E) -->
-            </div>
-        </div>
       
       <!-- wrap_result(E) -->
 </form>
