@@ -1,3 +1,15 @@
+/*=========================================================
+*Copyright(c) 2022 CyberLogitec
+*@FileName : ESM_DOU_0108.js
+*@FileTitle : ESM_DOU_0108
+*Open Issues :
+*Change history :
+*@LastModifyDate : 2022.07.05
+*@LastModifier : 
+*@LastVersion : 1.0
+* 2022.06.22 
+* 1.0 Creation
+=========================================================*/
 var sheetObjects=new Array();
 var sheetCnt=0;
 
@@ -25,6 +37,9 @@ var searchForDbl ="";
 
 document.onclick=processButtonClick;
 
+/**
+ * handle the click event from JSP button 
+ */
 function processButtonClick() {
 	var sheetObject1=sheetObjects[0];
 	var sheetObject2=sheetObjects[1];
@@ -83,6 +98,10 @@ function processButtonClick() {
     }
 }
 
+/**
+ *  This function calls a common function that sets the default settings of the sheet,
+ *  It is the first called area when file *jsp onload event.
+ */
 function loadPage(){
 	initCalender();
 	for (var i = 0; i < comboObjects.length; i++) {
@@ -102,18 +121,40 @@ function loadPage(){
 	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
 }
 
+/**
+ * Registering IBSheet Object as list adding process for list in case of needing
+ * batch processing with other items defining list on the top of source.
+ * 
+ * @param sheet_obj: Object - sheet object.
+ */
 function setSheetObject(sheet_obj){
 	sheetObjects[sheetCnt++] = sheet_obj;
 }
 
+/**
+ * Registering IBCombo Object as list parameter : combo_obj adding process for list
+ * in case of needing batch processing with other items defining list on the top of source.
+ * 
+ * @param combo_obj: Object - combo object.
+ */
 function setComboObject(combo_obj) {
 	comboObjects[comboCnt++] = combo_obj;
 }
 
+/**
+ * set tab object
+ * @param tab_obj : tab object
+ */
 function setTabObject(tab_obj){
 	tabObjects[tabCnt++]=tab_obj;
 }
 
+/**
+ * This function initSheet define the basic properties of the sheet on the screen.
+ * 
+ * @param sheetObj: IBSheet Object.
+ * @param sheetNo:  Number of IBSheet Object.
+ */
 function initSheet(sheetObj,sheetNo) {
 	switch (sheetNo) {
 		case 1:
@@ -186,6 +227,11 @@ function initSheet(sheetObj,sheetNo) {
 	resizeSheet();
 }
 
+/**
+ * Initializing tab object
+ * @param tab_obj : tab object 
+ * @param tabNo
+ */
 function initTab(tabObj , tabNo) {
 	switch(tabNo) {
 	case 1:
@@ -198,6 +244,13 @@ function initTab(tabObj , tabNo) {
 	}
 }
 
+/**
+ * Event when clicking Tab
+ * activating selected tab items
+ * nItem --> the number of tab that user click in
+ * @param tabObj
+ * @param nItem
+ */ 
 function tab1_OnChange(tabObj, nItem)
 {
 	var objs=document.all.item("tabLayer");
@@ -215,6 +268,11 @@ function tab1_OnChange(tabObj, nItem)
     resizeSheet();
 } 
 
+/**
+ * This function that define the basic properties for combo bõ.
+ * @param comboObj: combo object
+ * @param comNo: index of combo object
+ */
 function initCombo(comboObj, comboNo) {
 	switch(comboNo){
 	    case 0:
@@ -235,6 +293,11 @@ function initCombo(comboObj, comboNo) {
 	
 }
 
+/**
+ * This function is used for checking all item
+ * @param comboObj
+ * @param status
+ */
 function checkAllItem(comboObj, status){
 	var size = comboObj.GetItemCount();
     for(var i=1;i<size;i++){
@@ -242,33 +305,62 @@ function checkAllItem(comboObj, status){
     }	  
 }
 
+/**
+ * Get value of partner combo
+ * @returns
+ */
 function getPartnerValue(){
 	return document.form.s_partner_code_text.value;
 }
 
+/**
+ * Set value for partner combo
+ * @param value
+ */
 function setPartnerValue(value){
 	document.form.s_partner_code_text.value = value;
 	document.form.s_partner_code.value = value;
 }
 
+/**
+ * Get value of lane combo
+ * @returns
+ */
 function getLaneValue(){
 	return document.form.s_lane_code_text.value;
 }
 
+/**
+ * Set value for lane combo
+ * @param value
+ */
 function setLaneValue(value){
 	document.form.s_lane_code_text.value = value;
 	document.form.s_lane_code.value = value;
 }
 
+/**
+ * Get value of trade combo
+ * @returns
+ */
 function getTradeValue(){
 	return document.form.s_trade_code_text.value;
 }
 
+/**
+ * Set value for lane combo
+ * @param value
+ */
 function setTradeValue(value){
 	document.form.s_trade_code_text.value = value;
 	document.form.s_trade_code.value = value;
 }
 
+/**
+ * Check if item in combo object is all checked
+ * @param comboObj
+ * @returns {Boolean}
+ */
 function isCheckAllItem(comboObj){
 	var size = comboObj.GetItemCount();
     var count=1;
@@ -280,6 +372,11 @@ function isCheckAllItem(comboObj){
     return count==size;
 }
 
+/**
+ * Function that add item to combo box 
+ * @param comboObj 
+ * @param comboItems
+ */
 function addComboItem(comboObj, comboItems) {
 	comboItems= comboItems?comboItems.split("|"):[];
 	for (var i=0 ; i < comboItems.length ; i++) {
@@ -287,6 +384,10 @@ function addComboItem(comboObj, comboItems) {
 	}   		
 }
 
+/**
+ * Enable lane combo
+ * @param generate: generate data or not
+ */
 function enableLaneCombo(generate){
 	setLaneValue("");
 	var partnerValue=getPartnerValue();
@@ -300,6 +401,10 @@ function enableLaneCombo(generate){
 	}
 }
 
+/**
+ * Enable trade combo
+ * @param generate: generate data or not
+ */
 function enableTradeCombo(generate){
 	setTradeValue("");
 	var laneValue=getLaneValue();
@@ -314,6 +419,10 @@ function enableTradeCombo(generate){
 	}
 }
 
+/**
+ * Function is used for generating data for combo box
+ * @param comboNo
+ */
 function generateComboData(comboNo){
 	comboObj = comboObjects[comboNo];
 	comboObj.RemoveAll();
@@ -331,12 +440,23 @@ function generateComboData(comboNo){
 	initCombo(comboObj, comboNo);
 }
 
+/**
+ * Check if date valid
+ * @returns {Boolean}
+ */
 function isValidDate(){
 	var from=new Date(document.form.date_fr.value);
 	var to = new Date(document.form.date_to.value);
 	return from < to;
 }
 
+/**
+ * Event fires when user checks Partner combo box 
+ * @param comboObj
+ * @param index
+ * @param value
+ * @param status
+ */
 function s_partner_code_OnCheckClick(comboObj,index,value,status){
 	if(status){
 		if(value=="All"){
@@ -354,16 +474,24 @@ function s_partner_code_OnCheckClick(comboObj,index,value,status){
 	enableTradeCombo();
 }
 
+/**
+ * Event fires when user out focus Partner combo box 
+ */
 function s_partner_code_OnBlur(){
 	enableLaneCombo(true);
 	enableTradeCombo(true);
 }
 
+/**
+ * Event fires when user change Lane combo box 
+ */
 function s_lane_code_OnChange(){
 	enableTradeCombo(true);
 }
 
-//{initCalender} functions that define the basic properties of the date on the screen
+/**
+ * Functions that define the basic properties of the date on the screen
+ */
 function initCalender(){
 	var formObj = document.form;
 	var ymTo = ComGetNowInfo("ym","-");
@@ -371,13 +499,22 @@ function initCalender(){
 	formObj.s_date_to.value = GetDateFormat(ymTo,"ym");
 	formObj.s_date_fr.value = GetDateFormat(ymFrom,"ym");
 }
+
+/**
+ * Funtion that adds month to date object
+ * @param obj
+ * @param month
+ */
 function addMonth(obj, month){
 	if (obj.value != ""){
 			obj.value = ComGetDateAdd(obj.value + "-01", "M", month).substr(0,7);
 	}
 	getCurrentSheet().RemoveAll();
 }
- //Get format date
+
+/**
+ * Get format date
+ */
 function GetDateFormat(obj, sFormat){
 	var sVal = String(getArgValue(obj));
 	sVal = sVal.replace(/\/|\-|\.|\:|\ /g,"");
@@ -392,6 +529,14 @@ function GetDateFormat(obj, sFormat){
 	retValue = ComGetMaskedValue(retValue,sFormat);
 	return retValue;
 }
+
+/**
+ *  This function defines the transaction logic between the user interface and the server of IBSheet.
+ *  
+ *  @param sheetObj:  IBSSheet Object.
+ *  @param formObj :  Form object.
+ *  @param sAction :  Action Code (e.g. IBSEARCH, IBSAVE, IBDELETE, IBDOWNEXCEL).
+ * */
 function doActionIBSheet(sheetObj,formObj,sAction) {
 	sheetObj.ShowDebugMsg(0);
 	switch (sAction) {
@@ -435,12 +580,20 @@ function doActionIBSheet(sheetObj,formObj,sAction) {
 	}
 }
 
+/**
+ * This function resize sheet,
+ * If don't call this functions, it will may make UI breakable.
+ */
 function resizeSheet() {
 	for (var i = 0; i < sheetObjects.length; i++) {
 		ComResizeSheet(sheetObjects[i]);
 	}
 }
 
+/**
+ * This function will delete the values ​​in the input and the Grid that are displayed in the UI when click new button.
+ * reset(): Remove all configurations in IBSheet and reset to OOTB state.
+ */
 function resetForm(formObj){
 	ComOpenWait(true);
 	sheetObjects[0].RemoveAll();
@@ -453,11 +606,26 @@ function resetForm(formObj){
 	ComOpenWait(false);
 }
 
+/**
+ * Event fires before searching
+ * @param sheetObj
+ * @param Code
+ * @param Msg
+ * @param StCode
+ * @param StMsg
+ */
 function sheet1_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) { 
 	ComOpenWait(true);
 }
 
-//Handling event after searching
+/**
+ * Event fires after searching
+ * @param sheetObj
+ * @param Code
+ * @param Msg
+ * @param StCode
+ * @param StMsg
+ */
 function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
 	ComOpenWait(false);
 	if(sheetObj.RowCount()>0){
@@ -466,11 +634,26 @@ function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) {
 	hightLightSum(sheetObj);
 }
 
+/**
+ * Event fires before searching
+ * @param sheetObj
+ * @param Code
+ * @param Msg
+ * @param StCode
+ * @param StMsg
+ */
 function sheet2_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) { 
 	ComOpenWait(true);
 }
 
-//Handling event after searching
+/**
+ * Event fires after searching
+ * @param sheetObj
+ * @param Code
+ * @param Msg
+ * @param StCode
+ * @param StMsg
+ */
 function sheet2_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
 	ComOpenWait(false);
 	if(sheetObj.RowCount()>0){
@@ -479,6 +662,11 @@ function sheet2_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) {
 	hightLightSum(sheetObj);
 }
 
+/**
+ * Check if the number of month(s) between from_date and to_date over three months or not
+ * checkOverThreeMonth
+ * @returns {Boolean}
+ */
 function checkOverThreeMonth() {
 	var months;
 	var from=new Date(document.form.date_fr.value);
@@ -489,10 +677,18 @@ function checkOverThreeMonth() {
     return months < 3 ? false : true;
 }
 
+/**
+ * Get current sheet
+ * @returns
+ */
 function getCurrentSheet() {
 	return sheetObjects[beforetab];
 }
 
+/**
+ * Get current search option
+ * @returns
+ */
 function getCurrentSearchOption(){
 	var currentSearchOption="";
 	with(document.form){
@@ -505,8 +701,10 @@ function getCurrentSearchOption(){
 	return currentSearchOption;
 }
 
+/**
+ * Handle on change tab
+ */
 function handleOnchangeTab(){
-	console.log(isDbClick);
 	if(firstLoad) {
 		firstLoad=false;
 		return;
@@ -517,16 +715,15 @@ function handleOnchangeTab(){
 	}
 	var currentSheet=getCurrentSheet();
 	var formQuery = getCurrentSearchOption();
-	console.log(searchSummary);
-	console.log(formQuery);
-	console.log(searchDetail);
 	if(searchSummary!=formQuery&&formQuery!=searchDetail){
-		console.log(78552222);
 		if (confirm("Search data was changed. Do you want to retrieve?")) {
 			doActionIBSheet(currentSheet,document.form,IBSEARCH);
 		} else {
 			return;
 		}
+	}
+	if(sheetObjects[1].RowCount()==0){
+		doActionIBSheet(currentSheet,document.form,IBSEARCH);
 	}
 	if(currentSheet.id=="sheet1"){//Summary Sheet
 		if(searchSummary!=formQuery){
@@ -539,6 +736,12 @@ function handleOnchangeTab(){
 	}
 }
 
+/**
+ * Event fires when user double click on sheet 1
+ * @param sheetObj
+ * @param Row
+ * @param Col
+ */
 function sheet1_OnDblClick(sheetObj, Row, Col) {
 	formObj = document.form;
 	isDbClick=true;
@@ -560,6 +763,13 @@ function sheet1_OnDblClick(sheetObj, Row, Col) {
 	}
 }
 
+/**
+ * This function is used to get data at row and append that data to string
+ * @param sheetObj: Sheet Object
+ * @param row: selected row
+ * @param saveNames: array of save name
+ * @returns data
+ */
 function getDataRow(sheetObj,row,saveNames){
 	var result="";
 	for(var i=0; i<saveNames.length;i++){
@@ -568,6 +778,10 @@ function getDataRow(sheetObj,row,saveNames){
 	return result;
 }
 
+/**
+ * Function that uses to hight light sum row
+ * @param sheetObj
+ */
 function hightLightSum(sheetObj){
 	sheetObj.SetRangeBackColor(2,0,sheetObj.LastRow()-2,12,"white")
 	if (sheetObj.RowCount() > 0) {
@@ -588,6 +802,10 @@ function hightLightSum(sheetObj){
 	}	
 }
 
+/**
+ * Function that uses to show total sum row
+ * @param sheetObj
+ */
 function showTotalSum(sheetObj){
 	var revTotalVND = 0;
 	var expTotalVND = 0;

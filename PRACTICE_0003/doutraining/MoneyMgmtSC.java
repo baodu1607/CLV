@@ -4,7 +4,7 @@
 *@FileTitle : Money Management
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.22
+*@LastModifyDate : 2022.07.05
 *@LastModifier : 
 *@LastVersion : 1.0
 * 2022.06.22 
@@ -14,26 +14,24 @@ package com.clt.apps.opus.esm.clv.doutraining;
 
 import java.util.List;
 
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.basic.MoneyMgmtBC;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.basic.MoneyMgmtBCImpl;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.event.EsmDou0108Event;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration.MoneyMgmtDBDAO;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.DetailVO;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.SummaryVO;
+import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.event.EventResponse;
-import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.GeneralEventResponse;
 import com.clt.framework.support.controller.html.FormCommand;
 import com.clt.framework.support.layer.service.ServiceCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.doutraining.carriermgmt.basic.CarrierMgmtBC;
-import com.clt.apps.opus.esm.clv.doutraining.carriermgmt.basic.CarrierMgmtBCImpl;
-import com.clt.apps.opus.esm.clv.doutraining.carriermgmt.vo.CarrierVO;
-import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.basic.MoneyMgmtBC;
-import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.basic.MoneyMgmtBCImpl;
-import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.event.EsmDou0108Event;
-import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.DetailVO;
-import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.SummaryVO;
 
 
 /**
- * ALPS-moneymgmt Business Logic ServiceCommand - ALPS-moneymgmt 대한 비지니스 트랜잭션을 처리한다.
+ * ALPS-MoneyMgmt Business Logic ServiceCommand - Process business transaction for ALPS-MoneyMgmt.
  * 
  * @author phuoc
  * @see MoneyMgmtDBDAO
@@ -45,9 +43,9 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 	private SignOnUserAccount account = null;
 
 	/**
-	 * moneymgmt system 업무 시나리오 선행작업<br>
-	 * 업무 시나리오 호출시 관련 내부객체 생성<br>
-	 */
+	* MoneyMgmt system task scenario precedent work<br>
+	* Creating related internal objects when calling a business scenario<br>
+	*/
 	public void doStart() {
 		log.debug("MoneymgmtSC 시작");
 		try {
@@ -59,16 +57,16 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 	}
 
 	/**
-	 * moneymgmt system 업무 시나리오 마감작업<br>
-	 * 업무 시나리오 종료시 관련 내부객체 해제<br>
-	 */
+	* MoneyMgmt system work scenario finishing work<br>
+	* Release related internal objects when the work scenario is finished<br>
+	*/
 	public void doEnd() {
 		log.debug("MoneymgmtSC 종료");
 	}
 
 	/**
-	 * 각 이벤트에 해당하는 업무 시나리오 수행<br>
-	 * ALPS-moneymgmt system 업무에서 발생하는 모든 이벤트의 분기처리<br>
+	 * Carry out business scenarios for each event<br>
+	 * Branch processing of all events occurring in ALPS-MoneyMgmt system work<br>
 	 * 
 	 * @param e Event
 	 * @return EventResponse
@@ -84,8 +82,6 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 				eventResponse = searchSummaryVO(e);
 			}else if (e.getFormCommand().isCommand(FormCommand.SEARCH01)) {
 				eventResponse = searchDetailVO(e);
-			}else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
-				eventResponse = manageSummaryVO(e);
 			}else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
 				eventResponse = initCombox();
 			}else if(e.getFormCommand().isCommand(FormCommand.SEARCH02)){
@@ -97,6 +93,11 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	
+	/**
+	 * This function is used for initializing data for partner combo box
+	 * @return
+	 * @throws EventException
+	 */
 	private EventResponse initCombox() throws EventException{
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		MoneyMgmtBC command = new MoneyMgmtBCImpl();
@@ -118,11 +119,11 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		}	
 		return eventResponse;
 	}
-	
+
 	/**
-	 * ESM_DOU_0108 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
-	 * 
+	 * ESM_DOU_0108 : [Event]<br>
+	 * [Act] for [Business Target].<br>
+	 * This method is used for searching Summary data  
 	 * @param Event e
 	 * @return EventResponse
 	 * @exception EventException
@@ -134,7 +135,7 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		MoneyMgmtBC command = new MoneyMgmtBCImpl();
 
 		try{
-			List<SummaryVO> list = command.searchSummaryVO(event.getSummaryVO());
+			List<SummaryVO> list = command.searchSummaryVO(event.getConditionVO());
 			eventResponse.setRsVoList(list);
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
@@ -144,6 +145,14 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	
+	/**
+	 * ESM_DOU_0108 : [Event]<br>
+	 * [Act] for [Business Target].<br>
+	 * This method is used for searching Detail data  
+	 * @param Event e
+	 * @return EventResponse
+	 * @exception EventException
+	 */
 	private EventResponse searchDetailVO(Event e) throws EventException {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
@@ -151,7 +160,7 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		MoneyMgmtBC command = new MoneyMgmtBCImpl();
 
 		try{
-			List<DetailVO> list = command.searchDetailVO(event.getDetailVO());
+			List<DetailVO> list = command.searchDetailVO(event.getConditionVO());
 			eventResponse.setRsVoList(list);
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
@@ -161,6 +170,12 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	
+	/**
+	 * This method is used for searching data for lane combo box
+	 * @param e
+	 * @return
+	 * @throws EventException
+	 */
 	private EventResponse searchLaneCode(Event e) throws EventException{
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		EsmDou0108Event event = (EsmDou0108Event)e;
@@ -184,6 +199,12 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	
+	/**
+	 * This method is used for searching data for trade combo box
+	 * @param e
+	 * @return
+	 * @throws EventException
+	 */
 	private EventResponse searchTradeCode(Event e) throws EventException{
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		EsmDou0108Event event = (EsmDou0108Event)e;
@@ -206,32 +227,5 @@ public class MoneyMgmtSC extends ServiceCommandSupport {
 		}	
 		return eventResponse;
 	}
-	
-	/**
-	 * ESM_DOU_0108 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
-	 *
-	 * @param Event e
-	 * @return EventResponse
-	 * @exception EventException
-	 */
-	private EventResponse manageSummaryVO(Event e) throws EventException {
-		// PDTO(Data Transfer Object including Parameters)
-		GeneralEventResponse eventResponse = new GeneralEventResponse();
-		EsmDou0108Event event = (EsmDou0108Event)e;
-		MoneyMgmtBC command = new MoneyMgmtBCImpl();
-		try{
-			begin();
-			command.manageSummaryVO(event.getSummaryVOS(),account);
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
-			commit();
-		} catch(EventException ex) {
-			rollback();
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
-		} catch(Exception ex) {
-			rollback();
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
-		}
-		return eventResponse;
-	}
+
 }

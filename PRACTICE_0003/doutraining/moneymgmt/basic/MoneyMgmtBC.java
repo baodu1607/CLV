@@ -4,7 +4,7 @@
 *@FileTitle : Money Management
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.22
+*@LastModifyDate : 2022.07.05
 *@LastModifier : 
 *@LastVersion : 1.0
 * 2022.06.22 
@@ -14,15 +14,14 @@ package com.clt.apps.opus.esm.clv.doutraining.moneymgmt.basic;
 
 import java.util.List;
 
-import com.clt.framework.core.layer.event.EventException;
-import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.doutraining.carriermgmt.vo.CarrierVO;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.ConditionVO;
 import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.SummaryVO;
+import com.clt.framework.core.layer.event.EventException;
 
 /**
  * ALPS-Moneymgmt Business Logic Command Interface<br>
- * - ALPS-Moneymgmt에 대한 비지니스 로직에 대한 인터페이스<br>
+ * - Interface to business logic for ALPS-Moneymgmt<br>
  *
  * @author phuoc
  * @since J2EE 1.6
@@ -31,27 +30,41 @@ import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.SummaryVO;
 public interface MoneyMgmtBC {
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This method is used for searching Summary data 
 	 * 
 	 * @param SummaryVO	summaryVO
 	 * @return List<SummaryVO>
 	 * @exception EventException
 	 */
-	public List<SummaryVO> searchSummaryVO(SummaryVO summaryVO) throws EventException;
-	public List<DetailVO> searchDetailVO(DetailVO detailVO) throws EventException;
-	
+	public List<SummaryVO> searchSummaryVO(ConditionVO conditionVO) throws EventException;
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
-	 * 
-	 * @param SummaryVO[] summaryVO
-	 * @param account SignOnUserAccount
-	 * @exception EventException
+	 * This method is used for searching Detail data 
+	 * @param detailVO
+	 * @return List<DetailVO>
+	 * @throws EventException
 	 */
-	public void manageSummaryVO(SummaryVO[] summaryVO,SignOnUserAccount account) throws EventException;
-	
+	public List<DetailVO> searchDetailVO(ConditionVO conditionVO) throws EventException;
+
+	/**
+	 * This method is used for getting data for Partner combo box
+	 * @return List<SummaryVO>
+	 * @throws EventException
+	 */
 	public List<SummaryVO> getPartnerCodes() throws EventException;
 	
+	/**
+	 * This method is used for getting data for Lane combo box
+	 * @param summaryVO
+	 * @return List<SummaryVO>
+	 * @throws EventException
+	 */
 	public List<SummaryVO> getLaneCodes(SummaryVO summaryVO) throws EventException;
 	
+	/**
+	 * This method is used for getting data for Trade combo box
+	 * @param summaryVO
+	 * @return List<SummaryVO>
+	 * @throws EventException
+	 */
 	public List<SummaryVO> getTradeCodes(SummaryVO summaryVO) throws EventException;
 }

@@ -4,7 +4,7 @@
 *@FileTitle : Money Management
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.22
+*@LastModifyDate : 2022.07.05
 *@LastModifier : 
 *@LastVersion : 1.0
 * 2022.06.22 
@@ -12,18 +12,19 @@
 =========================================================*/
 package com.clt.apps.opus.esm.clv.doutraining.moneymgmt.event;
 
-import com.clt.framework.support.layer.event.EventSupport;
+import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.ConditionVO;
 import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.doutraining.moneymgmt.vo.SummaryVO;
+import com.clt.framework.support.layer.event.EventSupport;
 
 
 /**
- * ESM_DOU_0108 에 대한 PDTO(Data Transfer Object including Parameters)<br>
- * -  ESM_DOU_0108HTMLAction에서 작성<br>
- * - ServiceCommand Layer로 전달하는 PDTO로 사용<br>
+ * ESM_DOU_0108 for PDTO(Data Transfer Object including Parameters)<br>
+ * - Created from ESM_DOU_0108HTMLAction<br>
+ * - Used as PDTO delivered to ServiceCommand Layer<br>
  *
  * @author phuoc
- * @see ESM_DOU_0108HTMLAction 참조
+ * @see ESM_DOU_0108HTMLAction refer
  * @since J2EE 1.6
  */
 
@@ -36,8 +37,15 @@ public class EsmDou0108Event extends EventSupport {
 	
 	DetailVO detailVO = null;
 	
-	/** Table Value Object Multi Data 처리 */
-	SummaryVO[] summaryVOs = null;
+	ConditionVO conditionVO = null;
+
+	public ConditionVO getConditionVO() {
+		return conditionVO;
+	}
+
+	public void setConditionVO(ConditionVO conditionVO) {
+		this.conditionVO = conditionVO;
+	}
 
 	public EsmDou0108Event(){}
 	
@@ -48,17 +56,9 @@ public class EsmDou0108Event extends EventSupport {
 	public void setDetailVO(DetailVO detailVO) {
 		this.detailVO = detailVO;
 	}
-	
-	public void setSummaryVOS(SummaryVO[] summaryVOs){
-		this. summaryVOs = summaryVOs;
-	}
 
 	public SummaryVO getSummaryVO(){
 		return summaryVO;
-	}
-
-	public SummaryVO[] getSummaryVOS(){
-		return summaryVOs;
 	}
 
 	public DetailVO getDetailVO() {

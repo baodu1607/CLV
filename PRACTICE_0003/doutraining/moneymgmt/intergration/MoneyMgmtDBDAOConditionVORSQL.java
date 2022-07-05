@@ -1,13 +1,13 @@
 /*=========================================================
 *Copyright(c) 2022 CyberLogitec
-*@FileName : MoneyMgmtDBDAOSummaryVOUSQL.java
-*@FileTitle : Money Management
+*@FileName : MoneyMgmtDBDAOConditionVORSQL.java
+*@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.22
+*@LastModifyDate : 2022.07.05
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2022.06.22 
+* 2022.07.05 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration;
@@ -23,7 +23,7 @@ import com.clt.framework.support.db.ISQLTemplate;
  * @since J2EE 1.6
  */
 
-public class MoneyMgmtDBDAOSummaryVOUSQL implements ISQLTemplate{
+public class MoneyMgmtDBDAOConditionVORSQL implements ISQLTemplate{
 
 	private StringBuffer query = new StringBuffer();
 	
@@ -34,15 +34,15 @@ public class MoneyMgmtDBDAOSummaryVOUSQL implements ISQLTemplate{
 	
 	/**
 	  * <pre>
-	  * 
+	  * MoneyMgmtDBDAO
 	  * </pre>
 	  */
-	public MoneyMgmtDBDAOSummaryVOUSQL(){
+	public MoneyMgmtDBDAOConditionVORSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.doutraining.moneymgmt.moneymgmt.integration").append("\n"); 
-		query.append("FileName : MoneyMgmtDBDAOSummaryVOUSQL").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.doutraining.moneymgmt.intergration").append("\n"); 
+		query.append("FileName : MoneyMgmtDBDAOConditionVORSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
 	
@@ -58,6 +58,11 @@ public class MoneyMgmtDBDAOSummaryVOUSQL implements ISQLTemplate{
 	 * Query 생성
 	 */
 	public void setQuery(){
-		
+		query.append("SELECT " ).append("\n"); 
+		query.append("	TRD_CD" ).append("\n"); 
+		query.append(",	RLANE_CD" ).append("\n"); 
+		query.append(",	JO_CRR_CD" ).append("\n"); 
+		query.append("FROM JOO_CARRIER" ).append("\n"); 
+
 	}
 }
