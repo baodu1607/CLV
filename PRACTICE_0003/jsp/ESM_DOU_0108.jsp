@@ -69,6 +69,7 @@
 		loadPage();
 	}
 </script>
+<script language="javascript" type="text/javascript" src="apps/opus/esm/clv/doutraining/moneymgmt/script/CoMoneyMgmt.js"></script>
 <form name="form">
 	<input type="hidden" name="f_cmd">
 	<input type="hidden" name="pagerows">
@@ -82,7 +83,7 @@
 		--><button type="button" class="btn_accent" name="btn_Retrieve" id="btn_Retrieve">Retrieve</button><!-- 
 		--><button type="button" class="btn_normal" name="btn_New" id="btn_New">New</button><!--  
 		--><button type="button" class="btn_normal" name="btn_DownExcel" id="btn_DownExcel">Down Excel</button><!-- 
-		--><button type="button" class="btn_normal" name="btn_Down" id="btn_DownExcel2">DownExcel2</button>
+		--><button type="button" class="btn_normal" name="btn_DownExcel2" id="btn_DownExcel2">DownExcel2</button>
 		</div>
 		<!-- opus_design_btn(E) -->
 		<!-- page_location(S) -->

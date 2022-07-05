@@ -24,8 +24,6 @@ var beforetab=1;
 var laneCodes="";
 var tradeCodes="";
 
-var IBDOWNEXCEL2=14;
-
 var cfmGtDtOver3M=false;
 
 var searchDetail="";
@@ -49,7 +47,7 @@ function processButtonClick() {
         switch(srcName) {
 	        case "btn_Retrieve":
 	        	if (!cfmGtDtOver3M&&checkOverThreeMonth()){
-	        		if (confirm("Year Month over 3 months, do you really want to get data?")){
+	        		if (confirm(msgs["ESM0002"])){//"Year Month over 3 months, do you really want to get data?"
 	        			cfmGtDtOver3M = true;
     	    		}else{
     	    			break;
@@ -59,7 +57,7 @@ function processButtonClick() {
 	        	break;
 	        case "btn_date_fr_up":
 	        	if(!isValidDate()){
-	        		ComShowMessage("Start date must be earlier than end date");
+	        		ComShowCodeMessage("ESM0001");//Start date must be earlier than end date
 	            	break;
 	        	}
 	        	addMonth(formObject.date_fr, 1); 
@@ -72,7 +70,7 @@ function processButtonClick() {
 	        	break;
 	        case "btn_date_to_down":
 	        	if(!isValidDate()){
-	        		ComShowMessage("Start date must be earlier than end date");
+	        		ComShowCodeMessage("ESM0001");//Start date must be earlier than end date
 	            	break;
 	        	}
 	        	addMonth(formObject.date_to, -1);
@@ -569,13 +567,10 @@ function doActionIBSheet(sheetObj,formObj,sAction) {
 				sheetObj.Down2Excel({ FileName: 'Report', SheetName: ' sheet1', DownCols: makeHiddenSkipCol(sheetObj), SheetDesign: 1, Merge: 1 });
 				sheetObjects[1].Down2Excel({ SheetName: ' sheet2', DownCols: makeHiddenSkipCol(sheetObjects[1]), Merge: 1 });
 				sheetObj.Down2ExcelBuffer(false);
-				
 			}
 			break;
 		case IBDOWNEXCEL2:	
-			formObj.f_cmd.value = COMMAND01;
-			formObj.action="ESM_DOU_0108GS.do";
-			formObj.submit();
+			ComShowCodeMessage("ESM0003");//This feature is not available now
 			break;
 	}
 }
@@ -716,7 +711,7 @@ function handleOnchangeTab(){
 	var currentSheet=getCurrentSheet();
 	var formQuery = getCurrentSearchOption();
 	if(searchSummary!=formQuery&&formQuery!=searchDetail){
-		if (confirm("Search data was changed. Do you want to retrieve?")) {
+		if (confirm(msgs['ESM0004'])) {//Search data was changed. Do you want to retrieve?
 			doActionIBSheet(currentSheet,document.form,IBSEARCH);
 		} else {
 			return;
