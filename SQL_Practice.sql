@@ -187,6 +187,7 @@ WITH report AS (
 )
 SELECT
     report.dt,
+    nvl(pro_cd,'00001') pro_cd,
     nvl(ord.total, 0) total
 FROM
          report left
