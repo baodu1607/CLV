@@ -141,12 +141,17 @@ WHERE
   
 --B) Viết cấu SQL lấy ra cái ORD_DT, ORD_TM, PROD_CD gần nhất theo CUST_NO
 SELECT
-    *
+    cust_no,
+    ord_dttm,
+    ord_no,
+    pro_cd
 FROM
     (
         SELECT
             cust_no,
             ord_dttm,
+            ord_no,
+            pro_cd,
             ROW_NUMBER()
             OVER(PARTITION BY cust_no
                  ORDER BY
@@ -154,9 +159,6 @@ FROM
             ) rank
         FROM
             tb_ord
-        GROUP BY
-            cust_no,
-            ord_dttm
     ) temp
 WHERE
     temp.rank = 1;
