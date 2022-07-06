@@ -815,11 +815,11 @@ function showTotalSum(sheetObj){
 		sheetObj.SetCellValue(arrSubsum[i],"locl_curr_cd",locl_curr_cd);
 		sheetObj.SetCellFont("FontBold", arrSubsum[i],"locl_curr_cd",arrSubsum[i],"inv_exp_act_amt",1);
 		if(locl_curr_cd=="VND"){
-			revTotalVND+=+sheetObj.GetCellValue(arrSubsum[i],"inv_rev_act_amt");
-			expTotalVND+=+sheetObj.GetCellValue(arrSubsum[i],"inv_exp_act_amt");
+			revTotalVND+=sheetObj.GetCellValue(arrSubsum[i],"inv_rev_act_amt");
+			expTotalVND+=sheetObj.GetCellValue(arrSubsum[i],"inv_exp_act_amt");
 		}else{
-			revTotalUSD+=+sheetObj.GetCellValue(arrSubsum[i],"inv_rev_act_amt");
-			expTotalUSD+=+sheetObj.GetCellValue(arrSubsum[i],"inv_exp_act_amt");
+			revTotalUSD+=sheetObj.GetCellValue(arrSubsum[i],"inv_rev_act_amt");
+			expTotalUSD+=sheetObj.GetCellValue(arrSubsum[i],"inv_exp_act_amt");
 		}	
 	}
 	sheetObj.DataInsert(-1);
