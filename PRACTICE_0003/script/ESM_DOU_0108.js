@@ -49,9 +49,9 @@ function processButtonClick() {
 	        	if (!cfmGtDtOver3M&&checkOverThreeMonth()){
 	        		if (confirm(msgs["ESM0002"])){//"Year Month over 3 months, do you really want to get data?"
 	        			cfmGtDtOver3M = true;
-    	    		}else{
-    	    			break;
-    	    		}
+		    		}else{
+		    			break;
+		    		}
 	        	}
 	    		doActionIBSheet(getCurrentSheet(), formObject, IBSEARCH);
 	        	break;
@@ -507,7 +507,10 @@ function addMonth(obj, month){
 	if (obj.value != ""){
 			obj.value = ComGetDateAdd(obj.value + "-01", "M", month).substr(0,7);
 	}
-	getCurrentSheet().RemoveAll();
+	for(i = 0; i < sheetObjects.length; i++) {
+		sheetObjects[i].RemoveAll();
+	}
+	
 }
 
 /**
@@ -539,22 +542,24 @@ function doActionIBSheet(sheetObj,formObj,sAction) {
 	sheetObj.ShowDebugMsg(0);
 	switch (sAction) {
 		case IBSEARCH: // retrieve
- 			if (sheetObj.id == "sheet1" ) {
- 				searchSummary = getCurrentSearchOption();
- 				searchForDbl = FormQueryString(formObj);
- 				formObj.f_cmd.value = SEARCH;
-			}
-			else if (sheetObj.id == "sheet2"){
-				searchDetail = getCurrentSearchOption();
-				formObj.f_cmd.value = SEARCH01;
-			}
  			if(!isDbClick){
- 				searchForDbl = FormQueryString(formObj);
+ 				if (sheetObj.id == "sheet1" ) {
+ 					formObj.f_cmd.value = SEARCH;
+ 	 				searchSummary = getCurrentSearchOption();
+ 	 				searchForDbl = FormQueryString(formObj);
+ 				}
+ 				else if (sheetObj.id == "sheet2"){
+ 					searchDetail = getCurrentSearchOption();
+ 					formObj.f_cmd.value = SEARCH01;
+ 				}
+ 				var xml = sheetObj.GetSearchData("ESM_DOU_0108GS.do", FormQueryString(formObj));
+		 		sheetObj.LoadSearchData(xml,{Sync:1});
  			}else{
  				searchDetail = searchSummary;
+ 				var xml = sheetObj.GetSearchData("ESM_DOU_0108GS.do", searchForDbl);
+ 	 			sheetObj.LoadSearchData(xml,{Sync:1});
  			}
- 			var xml = sheetObj.GetSearchData("ESM_DOU_0108GS.do", searchForDbl);
- 			sheetObj.LoadSearchData(xml,{Sync:1});
+ 			
 			break;
 		case IBRESET:
 			resetForm(formObj);
@@ -622,6 +627,7 @@ function sheet1_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) {
  * @param StMsg
  */
 function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+	console.log('SHEET1');
 	ComOpenWait(false);
 	if(sheetObj.RowCount()>0){
 		showTotalSum(sheetObj);
@@ -650,6 +656,7 @@ function sheet2_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) {
  * @param StMsg
  */
 function sheet2_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+	console.log('SHEET2');
 	ComOpenWait(false);
 	if(sheetObj.RowCount()>0){
 		showTotalSum(sheetObj);
@@ -712,14 +719,15 @@ function handleOnchangeTab(){
 	var formQuery = getCurrentSearchOption();
 	if(searchSummary!=formQuery&&formQuery!=searchDetail){
 		if (confirm(msgs['ESM0004'])) {//Search data was changed. Do you want to retrieve?
+//			console.log(123);
 			doActionIBSheet(currentSheet,document.form,IBSEARCH);
 		} else {
 			return;
 		}
 	}
-	if(sheetObjects[1].RowCount()==0){
-		doActionIBSheet(currentSheet,document.form,IBSEARCH);
-	}
+//	if(sheetObjects[1].RowCount()==0){
+//		doActionIBSheet(currentSheet,document.form,IBSEARCH);
+//	}
 	if(currentSheet.id=="sheet1"){//Summary Sheet
 		if(searchSummary!=formQuery){
 			doActionIBSheet(currentSheet, document.form, IBSEARCH);
@@ -739,14 +747,15 @@ function handleOnchangeTab(){
  */
 function sheet1_OnDblClick(sheetObj, Row, Col) {
 	formObj = document.form;
-	isDbClick=true;
-	if(searchDetail!=searchSummary||sheetObjects[1].RowCount()==0){
-		doActionIBSheet(sheetObjects[1], document.form, IBSEARCH);
-	}
+	isDbClick=true;	
 	if(sheetObj.GetCellValue(Row,"jo_crr_cd")!=""){
+		if(searchDetail!=searchSummary||sheetObjects[1].RowCount()==0){
+			doActionIBSheet(sheetObjects[1], document.form, IBSEARCH);
+		}
 		var saveNames=["jo_crr_cd","rlane_cd","inv_no","csr_no","locl_curr_cd","prnr_ref_no"];
 		var summaryData=getDataRow(sheetObjects[0],Row,saveNames);
 		var size=sheetObjects[1].RowCount();
+		console.log(size);
 		for(var i=2;i<=size;i++){
 			if(summaryData==getDataRow(sheetObjects[1],i,saveNames)){
 				tabObjects[0].SetSelectedIndex(1);
@@ -754,6 +763,7 @@ function sheet1_OnDblClick(sheetObj, Row, Col) {
 				return;
 			}
 		}
+		
 		ComShowCodeMessage('COM132701');
 	}
 }

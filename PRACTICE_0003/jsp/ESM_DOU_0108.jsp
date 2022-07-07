@@ -76,7 +76,7 @@
 	<!-- page_title_area(S) -->
 	<div class="page_title_area clear">
 		<!-- page_title(S) -->
-		<h2 class="page_title"><button type="button"><span id="title"></span></button></h2>
+		<h2 class="page_title"><button type="button"><span id="title">ESM_DOU_0108</span></button></h2>
 		<!-- page_title(E) -->
 		<!-- opus_design_btn(S) -->
 		<div class="opus_design_btn"><!-- 

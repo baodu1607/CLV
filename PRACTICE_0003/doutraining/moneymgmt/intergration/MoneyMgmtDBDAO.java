@@ -202,7 +202,7 @@ public class MoneyMgmtDBDAO extends DBDAOSupport {
 		//velocity parameter
 		Map<String, Object> velParam = new HashMap<String, Object>();
 		
-		List<String> partnerCodes=new ArrayList<String>();
+		List<String> partnerCodes = new ArrayList<String>();
 		
 		try{
 			if(summaryVO != null){
