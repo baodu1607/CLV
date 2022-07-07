@@ -236,11 +236,11 @@ SELECT
                        report.dt
               ), 0)             AS remain
 FROM
-         report left
-    JOIN (
+         report
+    LEFT JOIN (
         SELECT
             pro_cd,
-            substr(ord_dttm, 1, 6) AS ord_dttm,
+            substr(ord_dttm, 1, 6) AS ord_dttm, 
             COUNT(*)               total
         FROM
             tb_ord
