@@ -627,7 +627,6 @@ function sheet1_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) {
  * @param StMsg
  */
 function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
-	console.log('SHEET1');
 	ComOpenWait(false);
 	if(sheetObj.RowCount()>0){
 		showTotalSum(sheetObj);
@@ -656,7 +655,6 @@ function sheet2_OnBeforeSearch(sheetObj, Code, Msg, StCode, StMsg) {
  * @param StMsg
  */
 function sheet2_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
-	console.log('SHEET2');
 	ComOpenWait(false);
 	if(sheetObj.RowCount()>0){
 		showTotalSum(sheetObj);
@@ -719,15 +717,11 @@ function handleOnchangeTab(){
 	var formQuery = getCurrentSearchOption();
 	if(searchSummary!=formQuery&&formQuery!=searchDetail){
 		if (confirm(msgs['ESM0004'])) {//Search data was changed. Do you want to retrieve?
-//			console.log(123);
 			doActionIBSheet(currentSheet,document.form,IBSEARCH);
 		} else {
 			return;
 		}
 	}
-//	if(sheetObjects[1].RowCount()==0){
-//		doActionIBSheet(currentSheet,document.form,IBSEARCH);
-//	}
 	if(currentSheet.id=="sheet1"){//Summary Sheet
 		if(searchSummary!=formQuery){
 			doActionIBSheet(currentSheet, document.form, IBSEARCH);
@@ -755,7 +749,6 @@ function sheet1_OnDblClick(sheetObj, Row, Col) {
 		var saveNames=["jo_crr_cd","rlane_cd","inv_no","csr_no","locl_curr_cd","prnr_ref_no"];
 		var summaryData=getDataRow(sheetObjects[0],Row,saveNames);
 		var size=sheetObjects[1].RowCount();
-		console.log(size);
 		for(var i=2;i<=size;i++){
 			if(summaryData==getDataRow(sheetObjects[1],i,saveNames)){
 				tabObjects[0].SetSelectedIndex(1);
