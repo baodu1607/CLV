@@ -83,6 +83,12 @@ public class MoneyMgmtDBDAO extends DBDAOSupport {
 		return list;
 	}
 	
+	/**
+	 * This method is used for searching Summary data
+	 * @param summaryVO
+	 * @return List<SummaryVO>
+	 * @throws DAOException
+	 */
 	@SuppressWarnings("unchecked")
 	public List<SummaryVO> searchSummaryVO(ConditionVO conditionVO) throws DAOException {
 		DBRowSet dbRowset = null;
