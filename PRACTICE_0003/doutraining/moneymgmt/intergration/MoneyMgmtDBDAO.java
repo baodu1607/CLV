@@ -85,7 +85,7 @@ public class MoneyMgmtDBDAO extends DBDAOSupport {
 	
 	/**
 	 * This method is used for searching Summary data
-	 * @param summaryVO
+	 * @param conditionVO
 	 * @return List<SummaryVO>
 	 * @throws DAOException
 	 */
